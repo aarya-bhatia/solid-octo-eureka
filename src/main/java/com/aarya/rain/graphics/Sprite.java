@@ -1,26 +1,40 @@
 package com.aarya.rain.graphics;
 
+import com.aarya.rain.Game;
+
 public class Sprite {
 
-    private final int size;
-    private int x,y;
+    public final int size;
+    private int x, y;
     public int[] pixels;
     private SpriteSheet sheet;
 
-    public static final Sprite grass = new Sprite(128, 0, 0, SpriteSheet.sheet1);
+    public static final Sprite grass = new Sprite(16, 0, 0, SpriteSheet.sheet1);
+    public static final Sprite grass1 = new Sprite(16, 1, 0, SpriteSheet.sheet1);
+    public static final Sprite grass2 = new Sprite(16, 2, 0, SpriteSheet.sheet1);
+    public static final Sprite grass3 = new Sprite(16, 3, 0, SpriteSheet.sheet1);
+
+    static {
+        if(Game.debug) {
+            System.out.println(grass.size);
+        }
+    }
 
     public Sprite(int size, int x, int y, SpriteSheet sheet) {
         this.size = size;
         this.x = x * size;
-        this.pixels = new int[size*size];
+        this.y = y * size;
+        this.sheet = sheet;
+        this.pixels = new int[size * size];
+        load();
     }
 
     /* extracting sprite from the sprite sheet */
     private void load() {
-        for(int y = 0; y < size; y++) {
-            for(int x = 0; x < size; x++) {
-                pixels[x + y * size] = sheet.pixels[ (x + this.x) +
-                        (y + this.y) * sheet.size ];
+        for (int y = 0; y < size; y++) {
+            for (int x = 0; x < size; x++) {
+                pixels[x + y * size] = sheet.pixels[(x + this.x) +
+                        (y + this.y) * sheet.size];
             }
         }
     }

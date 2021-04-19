@@ -14,6 +14,7 @@ public class Screen {
     private final int height;
     private final int[] pixels;
     private final int[] tiles = new int[MAP_SIZE * MAP_SIZE];
+    private final static Random random = new Random();
 
     private int xOff = 0, yOff = 0;
 
@@ -22,7 +23,6 @@ public class Screen {
         height = h;
         pixels = new int[w*h];
 
-        Random random = new Random();
         for(int i = 0; i < tiles.length; i++) {
             tiles[i] = random.nextInt(0xffffff);
         }
@@ -61,7 +61,26 @@ public class Screen {
                 int xx = x + xOff;
                 int tileIndex = getTileIndex(x, xx, y, yy);
                 int idx = getIndex(x,y);
-                pixels[idx] = tiles[tileIndex];
+//                pixels[idx] = tiles[tileIndex];
+
+                Sprite s;
+                int tileNum = random.nextInt(4);
+
+                if(tileNum == 0) {
+                    s = Sprite.grass;
+                }
+                else if(tileNum == 1) {
+                    s = Sprite.grass1;
+                }
+                else if(tileNum == 2) {
+                    s = Sprite.grass2;
+                }
+                else {
+                    s = Sprite.grass3;
+                }
+
+                int ss = s.size;
+                pixels[idx] = s.pixels[(x & (ss-1)) + (y & (ss-1)) * ss];
             }
         }
     }
