@@ -1,5 +1,7 @@
 package com.aarya.rain;
+
 import com.aarya.rain.graphics.Screen;
+
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -24,7 +26,7 @@ public class Game extends Canvas implements Runnable {
     private Screen screen = new Screen(width, height);
 
     public Game() {
-        Dimension size = new Dimension(width*scale, height*scale);
+        Dimension size = new Dimension(width * scale, height * scale);
         setPreferredSize(size);
 
         frame = new JFrame();
@@ -32,7 +34,7 @@ public class Game extends Canvas implements Runnable {
 
     public synchronized void start() {
         running = true;
-        thread = new Thread (this, "Display");
+        thread = new Thread(this, "Display");
         thread.start();
     }
 
@@ -47,7 +49,7 @@ public class Game extends Canvas implements Runnable {
 
     public void run() {
         long lastTime = System.nanoTime();
-        final double ns = (1e9) /60.0;
+        final double ns = (1e9) / 60.0;
         long timer = System.currentTimeMillis();
         double delta = 0;
         int frames = 0;
@@ -55,7 +57,7 @@ public class Game extends Canvas implements Runnable {
 
         while (running) {
             long now = System.nanoTime();
-            delta += (now-lastTime) / ns;
+            delta += (now - lastTime) / ns;
             lastTime = now;
 
             while (delta >= 1) {
@@ -67,7 +69,7 @@ public class Game extends Canvas implements Runnable {
             render();
             frames++;
 
-            if(System.currentTimeMillis() - timer  > 1000) {
+            if (System.currentTimeMillis() - timer > 1000) {
                 timer = System.currentTimeMillis();
                 frame.setTitle(title + " | FPS: " + frames + " | UPS: " + updates);
                 updates = frames = 0;
@@ -77,7 +79,7 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void update() {
-
+        screen.update();
     }
 
     public void render() {
@@ -107,7 +109,7 @@ public class Game extends Canvas implements Runnable {
         game.frame.add(game);
         game.frame.pack();
         game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        game.frame.setLocationRelativeTo (null);
+        game.frame.setLocationRelativeTo(null);
         game.frame.setVisible(true);
         game.start();
     }
