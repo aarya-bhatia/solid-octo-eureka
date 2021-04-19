@@ -65,4 +65,8 @@ public class Screen {
             }
         }
     }
+
+    public void showTile() {
+
+    }
 }

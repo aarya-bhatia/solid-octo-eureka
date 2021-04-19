@@ -7,8 +7,10 @@ import java.io.IOException;
 public class SpriteSheet {
 
     private final String path;
-    private final int size;
+    public final int size;
     public int[] pixels;
+
+    public static final SpriteSheet sheet1 = new SpriteSheet("./textures/PathAndObjects.png", 512);
 
     public SpriteSheet(String path, int size) {
         this.path = path;
