@@ -16,6 +16,7 @@ public class Game extends Canvas implements Runnable {
     final static int width = 300;
     final static int height = width / 16 * 9;
     final static int scale = 3;
+    final static String title = "Rain";
 
     private Thread thread;
     private JFrame frame;
@@ -49,25 +50,35 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void run() {
-        long lastTime = System.currentTimeMillis();
+        long lastTime = System.nanoTime();
+        final double ns = (1e9) /60.0;
+        long timer = System.currentTimeMillis();
         double delta = 0;
+        int frames = 0;
+        int updates = 0;
 
         while (running) {
-            long now = System.currentTimeMillis();
-            delta += (now-lastTime) * 60;
+            long now = System.nanoTime();
+            delta += (now-lastTime) / ns;
             lastTime = now;
 
             while (delta >= 1) {
                 update();
                 delta--;
+                updates++;
             }
 
             render();
-            try {
-                Thread.sleep(1);
+            frames++;
+
+            if(System.currentTimeMillis() - timer  > 1000) {
+                timer = System.currentTimeMillis();
+                frame.setTitle(title + "\t | FPS: " + frames + "\t | UPS: " + updates);
+//                System.out.println("FPS: " + frames + "\t | UPS: " + updates);
+                updates = frames = 0;
             }
-            catch (InterruptedException e) { e.printStackTrace(); }
         }
+        stop();
     }
 
     public void update() {
@@ -97,14 +108,12 @@ public class Game extends Canvas implements Runnable {
     public static void main(String[] args) {
         Game game = new Game();
         game.frame.setResizable(false);
-        game.frame.setTitle("Rain");
+        game.frame.setTitle(title);
         game.frame.add(game);
         game.frame.pack();
         game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         game.frame.setLocationRelativeTo (null);
         game.frame.setVisible(true);
-
         game.start();
-
     }
 }
