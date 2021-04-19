@@ -1,6 +1,5 @@
 package com.aarya.rain;
 import com.aarya.rain.graphics.Screen;
-
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,18 +12,15 @@ import javax.swing.JFrame;
 
 public class Game extends Canvas implements Runnable {
 
-    final static int width = 300;
-    final static int height = width / 16 * 9;
-    final static int scale = 3;
-    final static String title = "Rain";
-
+    public final static int width = 300;
+    public final static int height = width / 16 * 9;
+    public final static int scale = 3;
+    public final static String title = "Rain";
     private Thread thread;
     private JFrame frame;
     private boolean running = false;
-
     private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB); // main view
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
-
     private Screen screen = new Screen(width, height);
 
     public Game() {
@@ -73,8 +69,7 @@ public class Game extends Canvas implements Runnable {
 
             if(System.currentTimeMillis() - timer  > 1000) {
                 timer = System.currentTimeMillis();
-                frame.setTitle(title + "\t | FPS: " + frames + "\t | UPS: " + updates);
-//                System.out.println("FPS: " + frames + "\t | UPS: " + updates);
+                frame.setTitle(title + " | FPS: " + frames + " | UPS: " + updates);
                 updates = frames = 0;
             }
         }
