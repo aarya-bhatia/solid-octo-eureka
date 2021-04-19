@@ -1,17 +1,18 @@
 package com.aarya.rain.graphics;
 
-/**
- * class to write to the pixels
- */
 public class Screen {
 
-    private int width, height;
-    public int[] pixels;
+    private int width,height;
+    private int[] pixels;
 
-    public Screen(int width, int height) {
-        this.width = width;
-        this.height = height;
-        this.pixels = new int[width * height];
+    public Screen(int w, int h) {
+        width = w;
+        height = h;
+        pixels = new int[w*h];
+    }
+
+    public int[] getPixels() {
+        return pixels;
     }
 
     /* converts 2d to 1d index */
@@ -19,12 +20,19 @@ public class Screen {
         return x + y * width;
     }
 
-    public void render() {
-        for(int y = 0; y < height; y++) {
-            for(int x = 0; x < width; x++) {
-                pixels[getIndex(x, y)] = 0xff00ff;
-            }
+    public void clear() {
+        for(int i = 0; i < pixels.length; i++) {
+            pixels[i] = 0;
         }
     }
 
+    public void render() {
+        /* iterate over all pixels in screen */
+        for(int y = 0; y < height; y++) {
+            for(int x = 0; x < width; x++) {
+                int idx = getIndex(x,y);
+                pixels[idx] = 0xff;
+            }
+        }
+    }
 }

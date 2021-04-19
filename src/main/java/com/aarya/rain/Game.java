@@ -1,26 +1,41 @@
 package com.aarya.rain;
+import com.aarya.rain.graphics.Screen;
 
-public class Game implements Runnable {
-    public static int width = 300;
-    public static int height = width / 16 * 9;
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 
-    /* We will render only (w x h) pixels but the screen size will be scaled up */
-    public static int scale = 3;
+import javax.swing.JFrame;
 
-    public static String title = "Rain";
+public class Game extends Canvas implements Runnable {
 
+    final static int width = 300;
+    final static int height = width / 16 * 9;
+    final static int scale = 3;
 
     private Thread thread;
-    private volatile boolean running = false;
-    private Window window;
+    private JFrame frame;
+    private boolean running = false;
+
+    private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB); // main view
+    private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+
+    private Screen screen = new Screen(width, height);
 
     public Game() {
+        Dimension size = new Dimension(width*scale, height*scale);
+        setPreferredSize(size);
+
+        frame = new JFrame();
     }
 
     public synchronized void start() {
         running = true;
-        window = new Window();
-        thread = new Thread(this, "Display");
+        thread = new Thread (this, "Display");
         thread.start();
     }
 
@@ -28,29 +43,57 @@ public class Game implements Runnable {
         running = false;
         try {
             thread.join();
-        }
-        catch (InterruptedException e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
     public void run() {
-        while(running) {
+        while (running) {
             update();
-            window.render();
+            render();
             try {
                 Thread.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
+            catch (InterruptedException e) { e.printStackTrace(); }
         }
     }
 
-    /* 60 times per sec to ensure consistency */
     public void update() {
+
+    }
+
+    public void render() {
+        BufferStrategy bs = getBufferStrategy();
+        if (bs == null) {
+            createBufferStrategy(3);
+            return;
+        }
+
+        screen.clear();
+        screen.render();
+        System.arraycopy(screen.getPixels(), 0, pixels, 0, pixels.length);
+
+        Graphics g = bs.getDrawGraphics();
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, getWidth(), getHeight());
+        g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+
+        g.dispose();
+        bs.show();
     }
 
     public static void main(String[] args) {
-        new Game().start();
+        Game game = new Game();
+        game.frame.setResizable(false);
+        game.frame.setTitle("Rain");
+        game.frame.add(game);
+        game.frame.pack();
+        game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        game.frame.setLocationRelativeTo (null);
+        game.frame.setVisible(true);
+
+        game.start();
+
     }
 }
