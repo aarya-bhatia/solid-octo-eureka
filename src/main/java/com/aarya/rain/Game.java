@@ -48,7 +48,7 @@ public class Game implements Runnable {
 
             update();
 
-            render();
+            window.render();
 
             try {
                 Thread.sleep(1);
@@ -56,31 +56,6 @@ public class Game implements Runnable {
                 e.printStackTrace();
             }
         }
-    }
-
-    /* Rendering as fast as possible */
-    public void render() {
-        Canvas canvas = window.getCanvas();
-        /* the buffer stores the pixels in memory to render in the next frame */
-        BufferStrategy bufferStrategy = canvas.getBufferStrategy();
-        if(bufferStrategy == null) {
-            /* Triple buffering for speed improvement */
-            canvas.createBufferStrategy(3);
-            return;
-        }
-
-        Graphics context = bufferStrategy.getDrawGraphics();
-
-        /* all the graphics happens here */
-
-        context.setColor(new Color(80,40,100));
-        context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
-        /* end */
-
-        context.dispose(); // clear graphics
-
-        bufferStrategy.show(); // buffer swapping
     }
 
     /* 60 times per sec to ensure consistency */
