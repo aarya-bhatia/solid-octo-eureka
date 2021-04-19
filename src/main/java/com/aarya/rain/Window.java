@@ -49,11 +49,7 @@ public class Window {
         frame.setVisible(true);
     }
 
-    public Canvas getCanvas() {
-        return canvas;
-    }
-
-    /* Rendering as fast as possible */
+    /* Rendering happens as fast as possible */
     public void render() {
 
         if(bufferStrategy == null) {

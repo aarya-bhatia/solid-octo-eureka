@@ -1,7 +1,6 @@
 package com.aarya.rain;
 
-import java.awt.*;
-import java.awt.image.BufferStrategy;
+import com.aarya.rain.graphics.Screen;
 
 public class Game implements Runnable {
 
@@ -14,6 +13,8 @@ public class Game implements Runnable {
 
     private Thread thread;
     private volatile boolean running = false;
+
+    private Screen screen;
 
     private Window window;
 
@@ -28,6 +29,7 @@ public class Game implements Runnable {
         running = true;
 
         window = new Window();
+        screen = new Screen(width, height);
 
         thread = new Thread(this, "Display");
         thread.start();
