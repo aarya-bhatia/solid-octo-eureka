@@ -14,7 +14,7 @@ public class Screen {
     private final int height;
     private final int[] pixels;
     private final int[] tiles = new int[MAP_SIZE * MAP_SIZE];
-    private final static Random random = new Random();
+    private final Random random = new Random();
 
     private int xOff = 0, yOff = 0;
 
