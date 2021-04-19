@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Screen {
 
-    private static final short TILE_SIZE = 6;
+    private static final short TILE_SIZE = 4;
     private static final short MAP_FACTOR = 3;
     private static final short MAP_SIZE = 1 << MAP_FACTOR;
     private static final short MAP_SIZE_MASK = MAP_SIZE - 1;
@@ -16,7 +16,6 @@ public class Screen {
     private final int[] tiles = new int[MAP_SIZE * MAP_SIZE];
 
     private int xOff = 0, yOff = 0;
-    private int dx = 1, dy = 0;
 
     public Screen(int w, int h) {
         width = w;
@@ -42,7 +41,7 @@ public class Screen {
         Arrays.fill(pixels, 0);
     }
 
-    public void update() {
+    public void update(int dx, int dy) {
         xOff += dx;
         yOff += dy;
     }

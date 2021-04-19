@@ -1,6 +1,7 @@
 package com.aarya.rain;
 
 import com.aarya.rain.graphics.Screen;
+import com.aarya.rain.input.Keyboard;
 
 import java.awt.Canvas;
 import java.awt.Color;
@@ -14,22 +15,31 @@ import javax.swing.JFrame;
 
 public class Game extends Canvas implements Runnable {
 
+    public static boolean debug = false;
+
     public final static int width = 300;
     public final static int height = width / 16 * 9;
     public final static int scale = 3;
     public final static String title = "Rain";
+
     private Thread thread;
     private JFrame frame;
     private boolean running = false;
+    private Screen screen = new Screen(width, height);
+    private Keyboard key;
+
     private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB); // main view
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
-    private Screen screen = new Screen(width, height);
 
     public Game() {
         Dimension size = new Dimension(width * scale, height * scale);
         setPreferredSize(size);
 
+        key = new Keyboard();
+        addKeyListener(key);
+
         frame = new JFrame();
+        requestFocus();
     }
 
     public synchronized void start() {
@@ -79,7 +89,19 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void update() {
-        screen.update();
+        if(key.up) {
+            screen.update(0, -1);
+        }
+        else if(key.down) {
+            screen.update(0, 1);
+        }
+        if(key.right) {
+            screen.update(1, 0);
+        }
+        else if(key.left) {
+            screen.update(-1, 0);
+        }
+        key.update();
     }
 
     public void render() {
