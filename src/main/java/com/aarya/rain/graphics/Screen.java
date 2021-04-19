@@ -32,11 +32,6 @@ public class Screen {
         return pixels;
     }
 
-    /* converts 2d to 1d index */
-    private int getIndex(int x, int y) {
-        return x + y * width;
-    }
-
     public void clear() {
         Arrays.fill(pixels, 0);
     }
@@ -57,35 +52,19 @@ public class Screen {
         /* iterate over all pixels in screen */
         for(int y = 0; y < height; y++) {
             int yy = y + yOff;
+            if(yy < 0 | yy >= height) { continue; }
             for(int x = 0; x < width; x++) {
                 int xx = x + xOff;
-                int tileIndex = getTileIndex(x, xx, y, yy);
-                int idx = getIndex(x,y);
+                if(xx < 0 || xx >= width) { continue; }
+
+//                int tileIndex = getTileIndex(x, xx, y, yy);
+//                int idx = getIndex(x,y);
 //                pixels[idx] = tiles[tileIndex];
 
-                Sprite s;
-                int tileNum = random.nextInt(4);
-
-                if(tileNum == 0) {
-                    s = Sprite.grass;
-                }
-                else if(tileNum == 1) {
-                    s = Sprite.grass1;
-                }
-                else if(tileNum == 2) {
-                    s = Sprite.grass2;
-                }
-                else {
-                    s = Sprite.grass3;
-                }
-
-                int ss = s.size;
-                pixels[idx] = s.pixels[(x & (ss-1)) + (y & (ss-1)) * ss];
+                int ms = Sprite.grass.size - 1;
+                int ss = Sprite.grass.size;
+                pixels[xx + yy * width] = Sprite.grass.pixels[(x & ms) + (y & ms) * ss];
             }
         }
-    }
-
-    public void showTile() {
-
     }
 }

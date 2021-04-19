@@ -10,9 +10,6 @@ public class Sprite {
     private SpriteSheet sheet;
 
     public static final Sprite grass = new Sprite(16, 0, 0, SpriteSheet.sheet1);
-    public static final Sprite grass1 = new Sprite(16, 1, 0, SpriteSheet.sheet1);
-    public static final Sprite grass2 = new Sprite(16, 2, 0, SpriteSheet.sheet1);
-    public static final Sprite grass3 = new Sprite(16, 3, 0, SpriteSheet.sheet1);
 
     static {
         if(Game.debug) {
