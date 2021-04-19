@@ -30,7 +30,7 @@ public class Level {
     public void render(int xScroll, int yScroll, Screen screen) {
     }
 
-    protected void time() {
+    public void time() {
     }
 
 }
