@@ -30,4 +30,7 @@ public class Window {
         frame.setVisible(true);
     }
 
+    public Canvas getCanvas() {
+        return canvas;
+    }
 }

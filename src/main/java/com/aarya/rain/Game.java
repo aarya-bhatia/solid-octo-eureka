@@ -1,5 +1,8 @@
 package com.aarya.rain;
 
+import java.awt.*;
+import java.awt.image.BufferStrategy;
+
 public class Game implements Runnable {
 
     public static int width = 300;
@@ -43,7 +46,9 @@ public class Game implements Runnable {
     public void run() {
         while(running) {
 
-            /* Update Game */
+            update();
+
+            render();
 
             try {
                 Thread.sleep(1);
@@ -51,6 +56,22 @@ public class Game implements Runnable {
                 e.printStackTrace();
             }
         }
+    }
+
+    /* Rendering as fast as possible */
+    public void render() {
+        Canvas canvas = window.getCanvas();
+        /* the buffer prepares the pixels to render in the next frame */
+        BufferStrategy bufferStrategy = canvas.getBufferStrategy();
+        if(bufferStrategy == null) {
+            /* Triple buffering for speed improvement */
+            canvas.createBufferStrategy(3);
+        }
+    }
+
+    /* 60 times per sec to ensure consistency */
+    public void update() {
+
     }
 
     public static void main(String[] args) {
