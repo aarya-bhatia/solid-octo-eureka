@@ -49,8 +49,19 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void run() {
+        long lastTime = System.currentTimeMillis();
+        double delta = 0;
+
         while (running) {
-            update();
+            long now = System.currentTimeMillis();
+            delta += (now-lastTime) * 60;
+            lastTime = now;
+
+            while (delta >= 1) {
+                update();
+                delta--;
+            }
+
             render();
             try {
                 Thread.sleep(1);
