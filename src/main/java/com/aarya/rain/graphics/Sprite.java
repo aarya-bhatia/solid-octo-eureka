@@ -10,6 +10,7 @@ public class Sprite {
     private SpriteSheet sheet;
 
     public static final Sprite grass = new Sprite(16, 0, 0, SpriteSheet.sheet1);
+    public static Sprite voidSprite = new Sprite(16, 0x1B87E0);
 
     static {
         if(Game.debug) {
@@ -24,6 +25,18 @@ public class Sprite {
         this.sheet = sheet;
         this.pixels = new int[size * size];
         load();
+    }
+
+    public Sprite(int size, int color) {
+        this.size = size;
+        pixels = new int[size * size];
+        setColor(color);
+    }
+
+    private void setColor(int color) {
+        for(int i = 0; i < pixels.length; i++) {
+            pixels[i] = color;
+        }
     }
 
     /* extracting sprite from the sprite sheet */

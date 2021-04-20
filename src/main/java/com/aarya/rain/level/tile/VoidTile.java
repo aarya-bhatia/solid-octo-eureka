@@ -3,9 +3,8 @@ package com.aarya.rain.level.tile;
 import com.aarya.rain.graphics.Screen;
 import com.aarya.rain.graphics.Sprite;
 
-public class GrassTile extends Tile {
-
-    public GrassTile(Sprite sprite) {
+public class VoidTile extends Tile {
+    public VoidTile(Sprite sprite) {
         super(sprite);
     }
 

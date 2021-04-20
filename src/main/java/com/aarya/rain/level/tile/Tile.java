@@ -6,9 +6,10 @@ import com.aarya.rain.graphics.Sprite;
 public abstract class Tile {
 
     protected int x, y;
-    protected Sprite sprite;
+    public Sprite sprite;
 
     public static Tile grassTile = new GrassTile(Sprite.grass);
+    public static Tile voidTile = new VoidTile(Sprite.voidSprite);
 
     public Tile(Sprite sprite) {
         this.sprite = sprite;

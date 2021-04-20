@@ -1,17 +1,19 @@
 package com.aarya.rain.graphics;
 
+import com.aarya.rain.level.tile.Tile;
+
 import java.util.Arrays;
 import java.util.Random;
 
 public class Screen {
 
-    private static final short TILE_SIZE = 4;
+    public static final short TILE_SIZE = 4;
     private static final short MAP_FACTOR = 3;
     private static final short MAP_SIZE = 1 << MAP_FACTOR;
     private static final short MAP_SIZE_MASK = MAP_SIZE - 1;
 
-    private final int width;
-    private final int height;
+    public final int width;
+    public final int height;
     private final int[] pixels;
     private final int[] tiles = new int[MAP_SIZE * MAP_SIZE];
     private final Random random = new Random();
@@ -67,4 +69,33 @@ public class Screen {
             }
         }
     }
+
+
+
+
+    public void renderTile(int tileX, int tileY, Tile tile) {
+        for(int y = 0; y < tile.sprite.size; y++) {
+            int yAbs = tileY + yOff;
+            for(int x = 0; x < tile.sprite.size; x++) {
+                int xAbs = tileX + xOff;
+                if(!valid(xAbs, yAbs)) {
+                    break;
+                }
+                pixels[xAbs + yAbs * width] = tile.sprite.pixels[x + y * tile.sprite.size];
+            }
+        }
+    }
+
+    private boolean valid(int x, int y) {
+        return x >= 0 && x < width && y >= 0 && y < height;
+    }
+
+
+
+
+
+
+
+
+
 }
