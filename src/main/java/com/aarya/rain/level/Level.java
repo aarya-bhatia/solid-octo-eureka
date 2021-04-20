@@ -1,7 +1,8 @@
 package com.aarya.rain.level;
 
 import com.aarya.rain.graphics.Screen;
-import com.aarya.rain.level.tile.Tile;
+import com.aarya.rain.graphics.Sprite;
+import com.aarya.rain.level.tile.*;
 
 public class Level {
 
@@ -44,21 +45,28 @@ public class Level {
     }
 
     public Tile getTile(int x, int y) {
-        if(x < 0 || x >= width || y < 0 || y >= height) return Tile.voidTile; // out of bounds
+        if(x < 0 || x >= width || y < 0 || y >= height) return Tiles.VOID; // out of bounds
 
-        switch(tiles[x + y * width]) {
+        int tmp = x + y * width;
+
+        switch(tiles[tmp]) {
             case 0: {
-                return Tile.grassTile1;
+                return Tiles.GRASS_1;
             }
             case 1: {
-                return Tile.grassTile2;
+                return Tiles.GRASS_2;
             }
             case 2: {
+                return Tiles.ROCK;
             }
             case 3: {
+                return tmp % 2 == 0 ? Tiles.TREE_1 : Tiles.TREE_2;
+            }
+            case 4: {
+                return Tiles.SHRUBS;
             }
             default: {
-                return Tile.voidTile;
+                return Tiles.VOID;
             }
         }
     }

@@ -57,8 +57,9 @@ public class Player extends Mob {
                     && animation % 40 < (ANIMATION_SPEED >> 1)) {
                 tmp = 1;
             }
-            else if(animation % ANIMATION_SPEED > ((ANIMATION_SPEED >> 1) + (ANIMATION_SPEED >> 2))
-                    && animation % ANIMATION_SPEED < ANIMATION_SPEED) {
+            else if(animation % ANIMATION_SPEED >
+                    ((ANIMATION_SPEED >> 1) + (ANIMATION_SPEED >> 2))
+                        && animation % ANIMATION_SPEED < ANIMATION_SPEED) {
                 tmp = 3;
             }
         }

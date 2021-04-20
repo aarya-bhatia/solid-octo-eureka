@@ -14,8 +14,8 @@ public class SpriteSheet {
     public final int w;
     public final int h;
 
-    public static final SpriteSheet basicTiles = new SpriteSheet("/basictiles.png", 128, 240);
-    public static final SpriteSheet characters = new SpriteSheet("/characters/characters.png", 192, 128);
+    public static final SpriteSheet BASIC_TILES = new SpriteSheet("/textures/basictiles.png", 128, 240);
+    public static final SpriteSheet CHARACTERS = new SpriteSheet("/characters/characters.png", 192, 128);
 
     public SpriteSheet(String path, int size) {
         this(path, size, size);

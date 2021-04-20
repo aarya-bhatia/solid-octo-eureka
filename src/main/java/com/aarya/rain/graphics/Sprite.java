@@ -17,40 +17,55 @@ public class Sprite {
 
         SPRITES.put("void", new Sprite(16, 0x1B87E0));
 
-        SPRITES.put("basic.tiles.grass.1", new Sprite(16, 0, 8, SpriteSheet.basicTiles));
-        SPRITES.put("basic.tiles.grass.2", new Sprite(16, 1, 8, SpriteSheet.basicTiles));
+        SPRITES.put("basic.tiles.grass.1", new Sprite(16, 0, 8, SpriteSheet.BASIC_TILES));
+        SPRITES.put("basic.tiles.grass.2", new Sprite(16, 1, 8, SpriteSheet.BASIC_TILES));
 
-        SPRITES.put("characters.boy.north.1", new Sprite(16, 3, 3, SpriteSheet.characters));
-        SPRITES.put("characters.boy.north.2", new Sprite(16, 4, 3, SpriteSheet.characters));
-        SPRITES.put("characters.boy.north.3", new Sprite(16, 5, 3, SpriteSheet.characters));
+        SPRITES.put("characters.boy.north.1", new Sprite(16, 3, 3, SpriteSheet.CHARACTERS));
+        SPRITES.put("characters.boy.north.2", new Sprite(16, 4, 3, SpriteSheet.CHARACTERS));
+        SPRITES.put("characters.boy.north.3", new Sprite(16, 5, 3, SpriteSheet.CHARACTERS));
 
-        SPRITES.put("characters.boy.east.1", new Sprite(16, 3, 2, SpriteSheet.characters));
-        SPRITES.put("characters.boy.east.2", new Sprite(16, 4, 2, SpriteSheet.characters));
-        SPRITES.put("characters.boy.east.3", new Sprite(16, 5, 2, SpriteSheet.characters));
+        SPRITES.put("characters.boy.east.1", new Sprite(16, 3, 2, SpriteSheet.CHARACTERS));
+        SPRITES.put("characters.boy.east.2", new Sprite(16, 4, 2, SpriteSheet.CHARACTERS));
+        SPRITES.put("characters.boy.east.3", new Sprite(16, 5, 2, SpriteSheet.CHARACTERS));
 
-        SPRITES.put("characters.boy.west.1", new Sprite(16, 3, 1, SpriteSheet.characters));
-        SPRITES.put("characters.boy.west.2", new Sprite(16, 4, 1, SpriteSheet.characters));
-        SPRITES.put("characters.boy.west.3", new Sprite(16, 5, 1, SpriteSheet.characters));
+        SPRITES.put("characters.boy.west.1", new Sprite(16, 3, 1, SpriteSheet.CHARACTERS));
+        SPRITES.put("characters.boy.west.2", new Sprite(16, 4, 1, SpriteSheet.CHARACTERS));
+        SPRITES.put("characters.boy.west.3", new Sprite(16, 5, 1, SpriteSheet.CHARACTERS));
 
-        SPRITES.put("characters.boy.south.1", new Sprite(16, 3, 0, SpriteSheet.characters));
-        SPRITES.put("characters.boy.south.2", new Sprite(16, 4, 0, SpriteSheet.characters));
-        SPRITES.put("characters.boy.south.3", new Sprite(16, 5, 0, SpriteSheet.characters));
+        SPRITES.put("characters.boy.south.1", new Sprite(16, 3, 0, SpriteSheet.CHARACTERS));
+        SPRITES.put("characters.boy.south.2", new Sprite(16, 4, 0, SpriteSheet.CHARACTERS));
+        SPRITES.put("characters.boy.south.3", new Sprite(16, 5, 0, SpriteSheet.CHARACTERS));
 
-        SPRITES.put("mobs.ghost.south.1", new Sprite(16, 6, 4, SpriteSheet.characters));
-        SPRITES.put("mobs.ghost.south.2", new Sprite(16, 7, 4, SpriteSheet.characters));
-        SPRITES.put("mobs.ghost.south.3", new Sprite(16, 8, 4, SpriteSheet.characters));
+        SPRITES.put("mobs.ghost.south.1", new Sprite(16, 6, 4, SpriteSheet.CHARACTERS));
+        SPRITES.put("mobs.ghost.south.2", new Sprite(16, 7, 4, SpriteSheet.CHARACTERS));
+        SPRITES.put("mobs.ghost.south.3", new Sprite(16, 8, 4, SpriteSheet.CHARACTERS));
 
-        SPRITES.put("mobs.ghost.west.1", new Sprite(16, 6, 5, SpriteSheet.characters));
-        SPRITES.put("mobs.ghost.west.2", new Sprite(16, 7, 5, SpriteSheet.characters));
-        SPRITES.put("mobs.ghost.west.3", new Sprite(16, 8, 5, SpriteSheet.characters));
+        SPRITES.put("mobs.ghost.west.1", new Sprite(16, 6, 5, SpriteSheet.CHARACTERS));
+        SPRITES.put("mobs.ghost.west.2", new Sprite(16, 7, 5, SpriteSheet.CHARACTERS));
+        SPRITES.put("mobs.ghost.west.3", new Sprite(16, 8, 5, SpriteSheet.CHARACTERS));
 
-        SPRITES.put("mobs.ghost.east.1", new Sprite(16, 6, 6, SpriteSheet.characters));
-        SPRITES.put("mobs.ghost.east.2", new Sprite(16, 7, 6, SpriteSheet.characters));
-        SPRITES.put("mobs.ghost.east.3", new Sprite(16, 8, 6, SpriteSheet.characters));
+        SPRITES.put("mobs.ghost.east.1", new Sprite(16, 6, 6, SpriteSheet.CHARACTERS));
+        SPRITES.put("mobs.ghost.east.2", new Sprite(16, 7, 6, SpriteSheet.CHARACTERS));
+        SPRITES.put("mobs.ghost.east.3", new Sprite(16, 8, 6, SpriteSheet.CHARACTERS));
 
-        SPRITES.put("mobs.ghost.north.1", new Sprite(16, 6, 7, SpriteSheet.characters));
-        SPRITES.put("mobs.ghost.north.2", new Sprite(16, 7, 7, SpriteSheet.characters));
-        SPRITES.put("mobs.ghost.north.3", new Sprite(16, 8, 7, SpriteSheet.characters));
+        SPRITES.put("mobs.ghost.north.1", new Sprite(16, 6, 7, SpriteSheet.CHARACTERS));
+        SPRITES.put("mobs.ghost.north.2", new Sprite(16, 7, 7, SpriteSheet.CHARACTERS));
+        SPRITES.put("mobs.ghost.north.3", new Sprite(16, 8, 7, SpriteSheet.CHARACTERS));
+
+        SPRITES.put("basic.tiles.wall.cold.1", new Sprite(16, 0, 0, SpriteSheet.BASIC_TILES));
+        SPRITES.put("basic.tiles.wall.cold.2", new Sprite(16, 1, 0, SpriteSheet.BASIC_TILES));
+        SPRITES.put("basic.tiles.wall.cold.3", new Sprite(16, 2, 0, SpriteSheet.BASIC_TILES));
+        SPRITES.put("basic.tiles.wall.cold.4", new Sprite(16, 3, 0, SpriteSheet.BASIC_TILES));
+        SPRITES.put("basic.tiles.wall.hot.1", new Sprite(16, 4, 0, SpriteSheet.BASIC_TILES));
+        SPRITES.put("basic.tiles.wall.hot.2", new Sprite(16, 5, 0, SpriteSheet.BASIC_TILES));
+        SPRITES.put("basic.tiles.wall.hot.3", new Sprite(16, 6, 0, SpriteSheet.BASIC_TILES));
+        SPRITES.put("basic.tiles.wall.hot.4", new Sprite(16, 7, 0, SpriteSheet.BASIC_TILES));
+
+        SPRITES.put("basic.tiles.grass.plain", new Sprite(16, 3,1, SpriteSheet.BASIC_TILES));
+        SPRITES.put("basic.tiles.tree.1", new Sprite(16, 6,4, SpriteSheet.BASIC_TILES));
+        SPRITES.put("basic.tiles.tree.2", new Sprite(16, 4,9, SpriteSheet.BASIC_TILES));
+        SPRITES.put("basic.tiles.rocks.1", new Sprite(16, 2,7, SpriteSheet.BASIC_TILES));
+        SPRITES.put("basic.tiles.shrubs.1", new Sprite(16, 4,2, SpriteSheet.BASIC_TILES));
 
         if(Game.debug) {
             System.out.println("# sprites : " + SPRITES.size());

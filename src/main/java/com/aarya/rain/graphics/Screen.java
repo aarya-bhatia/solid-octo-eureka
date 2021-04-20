@@ -2,6 +2,7 @@ package com.aarya.rain.graphics;
 
 import com.aarya.rain.entity.mob.Mob;
 import com.aarya.rain.entity.mob.Player;
+import com.aarya.rain.level.Tiles;
 import com.aarya.rain.level.tile.Tile;
 
 import java.util.Arrays;
@@ -22,6 +23,8 @@ public class Screen {
     private final Random random = new Random();
     public int xOff = 0;
     public int yOff = 0;
+
+    private static final int hiddenColor = Tiles.GRASS_1.sprite.pixels[0];
 
     public Screen(int w, int h) {
         width = w;
@@ -62,7 +65,15 @@ public class Screen {
                     break;
                 }
                 if (xAbs < 0) xAbs = 0;
-                pixels[xAbs + yAbs * width] = tile.sprite.pixels[x + y * tile.sprite.size];
+
+                int col = tile.sprite.pixels[x + y * tile.sprite.size];
+
+                if(!hideColor(col)) {
+                    pixels[xAbs + yAbs * width] = tile.sprite.pixels[x + y * tile.sprite.size];
+                }
+                else {
+                    pixels[xAbs + yAbs * width] = hiddenColor;
+                }
             }
         }
     }
@@ -81,13 +92,24 @@ public class Screen {
                 }
                 if (xAbs < 0) xAbs = 0;
 
-                // hide image background
                 int col = sprite.pixels[x + y * sprite.size];
 
-                if(col != 0xFFFFFF && col != 0 && col != 0xff76715F && col != 0xffC0C0C0) {
+                if (!hideColor(col)){
                     pixels[xAbs + yAbs * width] = sprite.pixels[x + y * sprite.size];
                 }
             }
+        }
+    }
+
+    private boolean hideColor(int col) {
+        switch (col) {
+            case 0:
+            case 0xffffff:
+            case 0xffc0c0c0:
+            case 0xff76715f:
+                return true;
+            default:
+                return false;
         }
     }
 
