@@ -30,10 +30,17 @@ public class Level {
 
     public void render(int xScroll, int yScroll, Screen screen) {
         screen.setOffset(xScroll, yScroll);
+        /* corner pins */
         int x0 = xScroll >> screen.TILE_SIZE;
         int x1 = (xScroll + screen.width) >> screen.TILE_SIZE;
         int y0 = yScroll >> screen.TILE_SIZE;
         int y1 = (yScroll + screen.height) >> screen.TILE_SIZE;
+
+        for(int y = y0; y < y1; y++) {
+            for(int x = x0; x < x1; x++) {
+                getTile(x, y).render(x, y, screen);
+            }
+        }
     }
 
     public Tile getTile(int x, int y) {

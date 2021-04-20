@@ -49,29 +49,7 @@ public class Screen {
         return xTmp + yTmp;
     }
 
-    public void render() {
-        /* iterate over all pixels in screen */
-        for(int y = 0; y < height; y++) {
-            int yy = y + yOff;
-            if(yy < 0 | yy >= height) { continue; }
-            for(int x = 0; x < width; x++) {
-                int xx = x + xOff;
-                if(xx < 0 || xx >= width) { continue; }
-
-//                int tileIndex = getTileIndex(x, xx, y, yy);
-//                int idx = getIndex(x,y);
-//                pixels[idx] = tiles[tileIndex];
-
-                int ms = Sprite.grass.size - 1;
-                int ss = Sprite.grass.size;
-                pixels[xx + yy * width] = Sprite.grass.pixels[(x & ms) + (y & ms) * ss];
-            }
-        }
-    }
-
     public void renderTile(int tileX, int tileY, Tile tile) {
-//        tileX -= xOff;
-//        tileY -= yOff;
         for(int y = 0; y < tile.sprite.size; y++) {
             int yAbs = tileY - yOff + y;
             for(int x = 0; x < tile.sprite.size; x++) {
