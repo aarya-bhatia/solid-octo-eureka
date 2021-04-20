@@ -45,10 +45,22 @@ public class Level {
 
     public Tile getTile(int x, int y) {
         if(x < 0 || x >= width || y < 0 || y >= height) return Tile.voidTile; // out of bounds
-        if(tiles[x + y * width] == 0) {
-            return Tile.grassTile;
+
+        switch(tiles[x + y * width]) {
+            case 0: {
+                return Tile.grassTile1;
+            }
+            case 1: {
+                return Tile.grassTile2;
+            }
+            case 2: {
+            }
+            case 3: {
+            }
+            default: {
+                return Tile.voidTile;
+            }
         }
-        return Tile.voidTile;
     }
 
     public void time() {

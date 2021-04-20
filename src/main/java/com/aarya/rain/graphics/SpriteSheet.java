@@ -10,21 +10,22 @@ import java.net.URL;
 public class SpriteSheet {
 
     private final String path;
-    public final int size;
     public int[] pixels;
+    public final int w;
+    public final int h;
 
-    public static final SpriteSheet sheet1 = new SpriteSheet("/textures/PathAndObjects.png", 512);
-
-    static {
-        if(Game.debug) {
-            System.out.println(Integer.toHexString(sheet1.pixels[0]));
-        }
-    }
+    public static final SpriteSheet basicTiles = new SpriteSheet("/basictiles.png", 128, 240);
+    public static final SpriteSheet characters = new SpriteSheet("/characters/characters.png", 192, 128);
 
     public SpriteSheet(String path, int size) {
+        this(path, size, size);
+    }
+
+    public SpriteSheet(String path, int w, int h) {
+        this.w = w;
+        this.h = h;
         this.path = path;
-        this.size = size;
-        this.pixels = new int[size*size];
+        this.pixels = new int[w*h];
         try {
             load();
         } catch (IOException e) {
@@ -35,7 +36,7 @@ public class SpriteSheet {
     private void load() throws IOException {
         URL imagePath = SpriteSheet.class.getResource(path);
         if(Game.debug) {
-            System.out.println(imagePath.getPath());
+            System.out.println("Loading sprite sheet: " + imagePath.getPath());
         }
         BufferedImage image = ImageIO.read(imagePath);
         image.getRGB(0, 0, image.getWidth(), image.getHeight(), pixels, 0, image.getWidth());
