@@ -1,5 +1,7 @@
 package com.aarya.rain.graphics;
 
+import com.aarya.rain.entity.mob.Mob;
+import com.aarya.rain.entity.mob.Player;
 import com.aarya.rain.level.tile.Tile;
 
 import java.util.Arrays;
@@ -24,9 +26,9 @@ public class Screen {
     public Screen(int w, int h) {
         width = w;
         height = h;
-        pixels = new int[w*h];
+        pixels = new int[w * h];
 
-        for(int i = 0; i < tiles.length; i++) {
+        for (int i = 0; i < tiles.length; i++) {
             tiles[i] = random.nextInt(0xffffff);
         }
     }
@@ -52,15 +54,33 @@ public class Screen {
     }
 
     public void renderTile(int tileX, int tileY, Tile tile) {
-        for(int y = 0; y < tile.sprite.size; y++) {
+        for (int y = 0; y < tile.sprite.size; y++) {
             int yAbs = tileY - yOff + y;
-            for(int x = 0; x < tile.sprite.size; x++) {
+            for (int x = 0; x < tile.sprite.size; x++) {
                 int xAbs = tileX - xOff + x;
-                if(!valid(xAbs, yAbs, tile)) {
+                if (!valid(xAbs, yAbs, tile.sprite)) {
                     break;
                 }
-                if(xAbs < 0) xAbs = 0;
+                if (xAbs < 0) xAbs = 0;
                 pixels[xAbs + yAbs * width] = tile.sprite.pixels[x + y * tile.sprite.size];
+            }
+        }
+    }
+
+    public void renderMobs(int mobX, int mobY, Mob mob) {
+
+    }
+
+    public void renderPlayer(int playerX, int playerY, Sprite sprite) {
+        for (int y = 0; y < sprite.size; y++) {
+            int yAbs = playerY - yOff + y;
+            for (int x = 0; x < sprite.size; x++) {
+                int xAbs = playerX - xOff + x;
+                if (!valid(xAbs, yAbs, sprite)) {
+                    break;
+                }
+                if (xAbs < 0) xAbs = 0;
+                pixels[xAbs + yAbs * width] = sprite.pixels[x + y * sprite.size];
             }
         }
     }
@@ -70,8 +90,8 @@ public class Screen {
         yOff = yOffset;
     }
 
-    private boolean valid(int x, int y, Tile tile) {
-        return x >= -tile.sprite.size && x < width && y >= 0 && y < height;
+    private boolean valid(int x, int y, Sprite sprite) {
+        return x >= -sprite.size && x < width && y >= 0 && y < height;
     }
 
 }
