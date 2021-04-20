@@ -2,6 +2,8 @@ package com.aarya.rain;
 
 import com.aarya.rain.graphics.Screen;
 import com.aarya.rain.input.Keyboard;
+import com.aarya.rain.level.Level;
+import com.aarya.rain.level.RandomLevel;
 
 import java.awt.Canvas;
 import java.awt.Color;
@@ -31,6 +33,8 @@ public class Game extends Canvas implements Runnable {
     private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB); // main view
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 
+    private Level level;
+
     public Game() {
         Dimension size = new Dimension(width * scale, height * scale);
         setPreferredSize(size);
@@ -40,6 +44,8 @@ public class Game extends Canvas implements Runnable {
 
         frame = new JFrame();
         requestFocus();
+
+        level = new RandomLevel(64, 64);
     }
 
     public synchronized void start() {
@@ -112,7 +118,8 @@ public class Game extends Canvas implements Runnable {
         }
 
         screen.clear();
-        screen.render();
+        level.render(screen.xOff, screen.yOff, screen);
+
         System.arraycopy(screen.getPixels(), 0, pixels, 0, pixels.length);
 
         Graphics g = bs.getDrawGraphics();
