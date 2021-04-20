@@ -11,6 +11,7 @@ public class Screen {
     private static final short MAP_FACTOR = 3;
     private static final short MAP_SIZE = 1 << MAP_FACTOR;
     private static final short MAP_SIZE_MASK = MAP_SIZE - 1;
+    public static final short TILE_SIZE_ACTUAL = 1 << TILE_SIZE;
 
     public final int width;
     public final int height;
@@ -55,9 +56,10 @@ public class Screen {
             int yAbs = tileY - yOff + y;
             for(int x = 0; x < tile.sprite.size; x++) {
                 int xAbs = tileX - xOff + x;
-                if(!valid(xAbs, yAbs)) {
+                if(!valid(xAbs, yAbs, tile)) {
                     break;
                 }
+                if(xAbs < 0) xAbs = 0;
                 pixels[xAbs + yAbs * width] = tile.sprite.pixels[x + y * tile.sprite.size];
             }
         }
@@ -68,8 +70,8 @@ public class Screen {
         yOff = yOffset;
     }
 
-    private boolean valid(int x, int y) {
-        return x >= 0 && x < width && y >= 0 && y < height;
+    private boolean valid(int x, int y, Tile tile) {
+        return x >= -TILE_SIZE_ACTUAL && x < width && y >= 0 && y < height;
     }
 
 }

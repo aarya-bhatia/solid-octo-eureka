@@ -32,9 +32,9 @@ public class Level {
         screen.setOffset(xScroll, yScroll);
         /* corner pins */
         int x0 = xScroll >> screen.TILE_SIZE;
-        int x1 = (xScroll + screen.width) >> screen.TILE_SIZE;
+        int x1 = (xScroll + screen.width + screen.TILE_SIZE_ACTUAL) >> screen.TILE_SIZE;
         int y0 = yScroll >> screen.TILE_SIZE;
-        int y1 = (yScroll + screen.height) >> screen.TILE_SIZE;
+        int y1 = (yScroll + screen.height + screen.TILE_SIZE_ACTUAL) >> screen.TILE_SIZE;
 
         for(int y = y0; y < y1; y++) {
             for(int x = x0; x < x1; x++) {
