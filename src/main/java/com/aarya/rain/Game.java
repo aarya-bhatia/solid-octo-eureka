@@ -1,14 +1,12 @@
 package com.aarya.rain;
 
+import com.aarya.rain.entity.mob.Player;
 import com.aarya.rain.graphics.Screen;
 import com.aarya.rain.input.Keyboard;
 import com.aarya.rain.level.Level;
 import com.aarya.rain.level.RandomLevel;
 
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
@@ -29,11 +27,13 @@ public class Game extends Canvas implements Runnable {
     private boolean running = false;
     private Screen screen = new Screen(width, height);
     private Keyboard key;
+    private Player player;
 
     private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB); // main view
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 
     private Level level;
+    private boolean displayDebugOnWindow = true;
 
     public Game() {
         Dimension size = new Dimension(width * scale, height * scale);
@@ -46,6 +46,7 @@ public class Game extends Canvas implements Runnable {
         requestFocus();
 
         level = new RandomLevel(64, 64);
+        player = new Player(key);
     }
 
     public synchronized void start() {
@@ -95,19 +96,8 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void update() {
-        if(key.up) {
-            screen.update(0, -1);
-        }
-        else if(key.down) {
-            screen.update(0, 1);
-        }
-        if(key.right) {
-            screen.update(1, 0);
-        }
-        else if(key.left) {
-            screen.update(-1, 0);
-        }
         key.update();
+        player.update();
     }
 
     public void render() {
@@ -118,14 +108,22 @@ public class Game extends Canvas implements Runnable {
         }
 
         screen.clear();
-        level.render(screen.xOff, screen.yOff, screen);
+        level.render(player.x, player.y, screen);
 
         System.arraycopy(screen.getPixels(), 0, pixels, 0, pixels.length);
 
         Graphics g = bs.getDrawGraphics();
+
+        g.setFont(new Font("Verdana", 0, 50));
+        g.setFont(new Font("Verdana", 0, 50));
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, getWidth(), getHeight());
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+
+        if(displayDebugOnWindow) {
+            g.setColor(Color.WHITE);
+            g.drawString(String.format("X: %d, Y: %d", screen.xOff, screen.yOff), 450, 400);
+        }
 
         g.dispose();
         bs.show();

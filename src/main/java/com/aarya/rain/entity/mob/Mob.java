@@ -9,12 +9,27 @@ public abstract class Mob extends Entity {
     protected int dir = 0;
     protected boolean moving = false;
 
-    public void move() {}
+    public void move(int dx, int dy) {
+        /*
+         * North = 0, East = 1, South = 2, West = 3
+         */
+        if(dx > 0) dir = 1;
+        if(dx < 0) dir = 3;
+        if(dy > 0) dir = 2;
+        if(dy < 0) dir = 0;
+
+        if(!collision()) {
+            x += dx;
+            y += dy;
+        }
+    }
 
     public void update() {}
 
-    /* Todo */
     private boolean collision(){
         return false;
+    }
+
+    public void render() {
     }
 }
