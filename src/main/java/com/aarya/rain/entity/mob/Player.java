@@ -62,10 +62,6 @@ public class Player extends Mob {
                 screen.renderPlayer(x, y, Sprite.SPRITES.get("characters.boy.west.1"));
                 break;
             }
-            default: {
-                screen.renderPlayer(x, y, Sprite.SPRITES.get("characters.boy.south.1"));
-                break;
-            }
         }
     }
 }

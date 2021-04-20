@@ -119,14 +119,14 @@ public class Game extends Canvas implements Runnable {
 
         Graphics g = bs.getDrawGraphics();
 
-        g.setFont(new Font("Verdana", 0, 50));
+        g.setFont(new Font("Verdana", 0, 30));
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, getWidth(), getHeight());
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 
         if(displayDebugOnWindow) {
             g.setColor(Color.WHITE);
-            g.drawString(String.format("X: %d, Y: %d", player.x, player.y), 350, 300);
+            g.drawString(String.format("X: %d, Y: %d", player.x, player.y), 450, 400);
         }
 
         g.dispose();
