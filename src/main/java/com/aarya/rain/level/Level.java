@@ -29,6 +29,7 @@ public class Level {
     }
 
     public void render(int xScroll, int yScroll, Screen screen) {
+        screen.setOffset(xScroll, yScroll);
         int x0 = xScroll >> screen.TILE_SIZE;
         int x1 = (xScroll + screen.width) >> screen.TILE_SIZE;
         int y0 = yScroll >> screen.TILE_SIZE;

@@ -17,7 +17,6 @@ public class Screen {
     private final int[] pixels;
     private final int[] tiles = new int[MAP_SIZE * MAP_SIZE];
     private final Random random = new Random();
-
     private int xOff = 0, yOff = 0;
 
     public Screen(int w, int h) {
@@ -70,14 +69,13 @@ public class Screen {
         }
     }
 
-
-
-
     public void renderTile(int tileX, int tileY, Tile tile) {
+//        tileX -= xOff;
+//        tileY -= yOff;
         for(int y = 0; y < tile.sprite.size; y++) {
-            int yAbs = tileY + yOff;
+            int yAbs = tileY - yOff + y;
             for(int x = 0; x < tile.sprite.size; x++) {
-                int xAbs = tileX + xOff;
+                int xAbs = tileX - xOff + x;
                 if(!valid(xAbs, yAbs)) {
                     break;
                 }
@@ -86,16 +84,13 @@ public class Screen {
         }
     }
 
+    public void setOffset(int xOffset, int yOffset) {
+        xOff = xOffset;
+        yOff = yOffset;
+    }
+
     private boolean valid(int x, int y) {
         return x >= 0 && x < width && y >= 0 && y < height;
     }
-
-
-
-
-
-
-
-
 
 }
