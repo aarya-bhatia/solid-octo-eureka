@@ -84,7 +84,7 @@ public class Screen {
                 // hide image background
                 int col = sprite.pixels[x + y * sprite.size];
 
-                if(col != 0xFFFFFF && col != 0 && col != 0x76715F && col != 0xC0C0C0) {
+                if(col != 0xFFFFFF && col != 0 && col != 0xff76715F && col != 0xffC0C0C0) {
                     pixels[xAbs + yAbs * width] = sprite.pixels[x + y * sprite.size];
                 }
             }
