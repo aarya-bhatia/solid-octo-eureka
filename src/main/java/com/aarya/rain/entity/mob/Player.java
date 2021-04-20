@@ -10,7 +10,7 @@ public class Player extends Mob {
     private int animation = 0;
     private boolean walking = false;
 
-    private static final short ANIMATION_SPEED = 100;
+    private static final short ANIMATION_SPEED = 40;
 
     public Player(Keyboard input) {
         this.input = input;
@@ -46,16 +46,16 @@ public class Player extends Mob {
         }
     }
 
-    /* Cycle the sprite 1, 2, 1, 3, ... */
+    /* Cycle the sprite 2, 1, 2, 3, ... */
     private short nextAnimationFrame() {
         animation = (animation + 1) % 9999;
 
-        short tmp = 1;
+        short tmp = 2;
 
         if(walking) {
             if(animation % ANIMATION_SPEED > (ANIMATION_SPEED >> 2)
                     && animation % 40 < (ANIMATION_SPEED >> 1)) {
-                tmp = 2;
+                tmp = 1;
             }
             else if(animation % ANIMATION_SPEED > ((ANIMATION_SPEED >> 1) + (ANIMATION_SPEED >> 2))
                     && animation % ANIMATION_SPEED < ANIMATION_SPEED) {
