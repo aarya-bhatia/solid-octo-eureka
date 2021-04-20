@@ -17,17 +17,24 @@ public class Player extends Mob {
     }
 
     public void update() {
+
+        int dx = 0, dy = 0;
+
         if(input.up) {
-            y--;
+            dy--;
         }
         else if(input.down) {
-            y++;
+            dy++;
         }
         if(input.right) {
-            x++;
+            dx++;
         }
         else if(input.left) {
-            x--;
+            dx--;
+        }
+
+        if(dx != 0 || dy != 0) {
+            move(dx, dy);
         }
     }
 
