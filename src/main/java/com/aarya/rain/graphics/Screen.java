@@ -71,7 +71,7 @@ public class Screen {
     }
 
     private boolean valid(int x, int y, Tile tile) {
-        return x >= -TILE_SIZE_ACTUAL && x < width && y >= 0 && y < height;
+        return x >= -tile.sprite.size && x < width && y >= 0 && y < height;
     }
 
 }
