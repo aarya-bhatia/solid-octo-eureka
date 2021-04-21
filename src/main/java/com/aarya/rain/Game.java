@@ -4,7 +4,6 @@ import com.aarya.rain.entity.mob.Player;
 import com.aarya.rain.graphics.Screen;
 import com.aarya.rain.input.Keyboard;
 import com.aarya.rain.level.Level;
-import com.aarya.rain.level.RandomLevel;
 import com.aarya.rain.level.SpawnLevel;
 
 import java.awt.*;
@@ -17,6 +16,7 @@ import javax.swing.JFrame;
 public class Game extends Canvas implements Runnable {
 
     public static boolean debug = false;
+    private static boolean displayDebugOnWindow = true;
 
     public final static int width = 300;
     public final static int height = width / 16 * 9;
@@ -25,17 +25,15 @@ public class Game extends Canvas implements Runnable {
 
     private Thread thread;
     private JFrame frame;
-    private boolean running = false;
     private Screen screen = new Screen(width, height);
     private Keyboard key;
     private Player player;
+    private Level level;
 
     private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB); // main view
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 
-    private Level level;
-    private Level spawnLevel;
-    private boolean displayDebugOnWindow = true;
+    private volatile boolean running = false;
 
     public Game() {
         Dimension size = new Dimension(width * scale, height * scale);
@@ -47,14 +45,14 @@ public class Game extends Canvas implements Runnable {
         frame = new JFrame();
         requestFocus();
 
-        level = new RandomLevel(64, 64);
-        spawnLevel = new SpawnLevel("/textures/level.png", 16, 16);
+        level = new SpawnLevel("/textures/level.png", 16, 16);
+
         player = new Player(key);
     }
 
     public synchronized void start() {
         running = true;
-        thread = new Thread(this, "Display");
+        thread = new Thread(this, "Game");
         thread.start();
     }
 
@@ -115,8 +113,7 @@ public class Game extends Canvas implements Runnable {
         int xScroll = player.x - screen.width/2;
         int yScroll = player.y - screen.height/2;
 
-//        level.render(xScroll, yScroll, screen);
-        spawnLevel.render(xScroll, yScroll, screen);
+        level.render(xScroll, yScroll, screen);
         player.render(screen);
 
         System.arraycopy(screen.getPixels(), 0, pixels, 0, pixels.length);

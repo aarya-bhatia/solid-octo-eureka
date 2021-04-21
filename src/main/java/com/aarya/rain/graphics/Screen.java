@@ -3,6 +3,7 @@ package com.aarya.rain.graphics;
 import com.aarya.rain.entity.mob.Mob;
 import com.aarya.rain.level.Tiles;
 import com.aarya.rain.level.tile.Tile;
+import com.aarya.rain.level.tile.VoidTile;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -67,7 +68,7 @@ public class Screen {
 
                 int col = tile.sprite.pixels[x + y * tile.sprite.SIZE];
 
-                if(!hideColor(col)) {
+                if(!hideColor(col) || tile instanceof VoidTile) {
                     pixels[xAbs + yAbs * width] = tile.sprite.pixels[x + y * tile.sprite.SIZE];
                 }
                 else {

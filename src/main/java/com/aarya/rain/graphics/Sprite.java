@@ -15,7 +15,8 @@ public class Sprite {
 
     static {
 
-        SPRITES.put("void", new Sprite(0x1B87E0));
+        SPRITES.put("void", new Sprite(0x311432));
+        SPRITES.put("water", new Sprite(0x1B87E0));
 
         SPRITES.put("basic.tiles.grass.1", new Sprite(0, 8, SpriteSheet.BASIC_TILES));
         SPRITES.put("basic.tiles.grass.2", new Sprite(1, 8, SpriteSheet.BASIC_TILES));
