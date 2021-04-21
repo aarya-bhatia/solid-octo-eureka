@@ -11,34 +11,33 @@ public class SpriteSheet {
 
     private final String path;
     public int[] pixels;
-    public final int w;
-    public final int h;
+    public final int width;
+    public final int height;
 
-    public static final SpriteSheet BASIC_TILES = new SpriteSheet("/textures/basictiles.png", 128, 240);
+    public static final SpriteSheet BASIC_TILES = new SpriteSheet("/textures/basic.tiles.png", 128, 240);
     public static final SpriteSheet CHARACTERS = new SpriteSheet("/characters/characters.png", 192, 128);
 
-    public SpriteSheet(String path, int size) {
-        this(path, size, size);
-    }
-
-    public SpriteSheet(String path, int w, int h) {
-        this.w = w;
-        this.h = h;
+    public SpriteSheet(String path, int width, int height) {
+        this.width = width;
+        this.height = height;
         this.path = path;
-        this.pixels = new int[w*h];
-        try {
-            load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.pixels = new int[width * height];
+        load();
     }
 
-    private void load() throws IOException {
+    private void load() {
         URL imagePath = SpriteSheet.class.getResource(path);
         if(Game.debug) {
             System.out.println("Loading sprite sheet: " + imagePath.getPath());
         }
-        BufferedImage image = ImageIO.read(imagePath);
-        image.getRGB(0, 0, image.getWidth(), image.getHeight(), pixels, 0, image.getWidth());
+        try {
+            BufferedImage image = ImageIO.read(imagePath);
+            image.getRGB(0, 0, image.getWidth(), image.getHeight(), pixels, 0, image.getWidth());
+            System.out.println("Successfully loaded sprite sheet : " + imagePath);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error loading sprite sheet: " + imagePath);
+        }
     }
 }
