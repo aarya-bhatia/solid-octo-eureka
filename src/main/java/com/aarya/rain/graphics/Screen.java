@@ -31,20 +31,20 @@ public class Screen {
     }
 
     public void renderTile(int X, int Y, Tile tile) {
-        for (int y = 0; y < tile.sprite.SIZE; y++) {
+        for (int y = 0; y < Sprite.SIZE; y++) {
             int yAbs = Y - yOff + y;
-            for (int x = 0; x < tile.sprite.SIZE; x++) {
+            for (int x = 0; x < Sprite.SIZE; x++) {
                 int xAbs = X - xOff + x;
 
-                if (!valid(xAbs, yAbs, tile.sprite)) {
+                if (!valid(xAbs, yAbs)) {
                     break;
                 }
                 if (xAbs < 0) xAbs = 0;
 
-                int col = tile.sprite.pixels[x + y * tile.sprite.SIZE];
+                int col = tile.sprite.pixels[x + y * Sprite.SIZE];
 
                 if (!hideColor(col) || tile instanceof VoidTile) {
-                    pixels[xAbs + yAbs * width] = tile.sprite.pixels[x + y * tile.sprite.SIZE];
+                    pixels[xAbs + yAbs * width] = tile.sprite.pixels[x + y * Sprite.SIZE];
                 } else {
                     pixels[xAbs + yAbs * width] = hiddenColor;
                 }
@@ -53,34 +53,30 @@ public class Screen {
     }
 
     public void renderPlayer(int X, int Y, Sprite sprite) {
-        for (int y = 0; y < sprite.SIZE; y++) {
+        for (int y = 0; y < Sprite.SIZE; y++) {
             int yAbs = Y - yOff + y;
-            for (int x = 0; x < sprite.SIZE; x++) {
+            for (int x = 0; x < Sprite.SIZE; x++) {
                 int xAbs = X - xOff + x;
 
-                if (!valid(xAbs, yAbs, sprite)) {
+                if (!valid(xAbs, yAbs)) {
                     break;
                 }
                 if (xAbs < 0) xAbs = 0;
 
-                int col = sprite.pixels[x + y * sprite.SIZE];
+                int col = sprite.pixels[x + y * Sprite.SIZE];
 
                 if (!hideColor(col)) {
-                    pixels[xAbs + yAbs * width] = sprite.pixels[x + y * sprite.SIZE];
+                    pixels[xAbs + yAbs * width] = sprite.pixels[x + y * Sprite.SIZE];
                 }
             }
         }
     }
 
     private boolean hideColor(int col) {
-        switch (col & 0xffffff) {
-            case 0:
-            case 0xffffff:
-            case 0xc0c0c0:
-            case 0x76715f:
-                return true;
-        }
-        return false;
+        return switch (col & 0xffffff) {
+            case 0, 0xffffff, 0xc0c0c0, 0x76715f -> true;
+            default -> false;
+        };
     }
 
     public void setOffset(int xOff, int yOff) {
@@ -88,13 +84,10 @@ public class Screen {
         this.yOff = yOff;
     }
 
-    private boolean valid(int x, int y, Sprite sprite) {
-        return x >= -(sprite.SIZE) && x < width && y >= 0 && y < height;
+    private boolean valid(int x, int y) {
+        return x >= -(Sprite.SIZE) && x < width && y >= 0 && y < height;
     }
 }
-
-
-
 
 //    private static final short MAP_FACTOR = 3;
 //    private static final short MAP_SIZE = 1 << MAP_FACTOR;
