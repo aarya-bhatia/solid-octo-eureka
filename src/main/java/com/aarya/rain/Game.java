@@ -47,7 +47,7 @@ public class Game extends Canvas implements Runnable {
 
         level = new SpawnLevel("/textures/level.png", 16, 16);
 
-        player = new Player(key);
+        player = new Player(screen.width / 2, screen.height / 2, key);
     }
 
     public synchronized void start() {
@@ -110,8 +110,8 @@ public class Game extends Canvas implements Runnable {
 
         screen.clear();
 
-        int xScroll = player.x - screen.width/2;
-        int yScroll = player.y - screen.height/2;
+        int xScroll = player.x - screen.width / 2;
+        int yScroll = player.y - screen.height / 2;
 
         level.render(xScroll, yScroll, screen);
         player.render(screen);
@@ -125,7 +125,7 @@ public class Game extends Canvas implements Runnable {
         g.fillRect(0, 0, getWidth(), getHeight());
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 
-        if(displayDebugOnWindow) {
+        if (displayDebugOnWindow) {
             g.setColor(Color.WHITE);
             g.drawString(String.format("X: %d, Y: %d", player.x, player.y), 450, 400);
         }

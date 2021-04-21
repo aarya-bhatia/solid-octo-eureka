@@ -8,8 +8,6 @@ import java.io.IOException;
 
 public class SpawnLevel extends Level {
 
-    private int[] pixels;
-
     public SpawnLevel(String path, int w, int h) {
         super(w, h);
         loadLevel(path);
@@ -18,10 +16,10 @@ public class SpawnLevel extends Level {
     protected void loadLevel(String path) {
         try {
             BufferedImage image = ImageIO.read(SpawnLevel.class.getResource(path));
-            int w = image.getWidth();
-            int h = image.getHeight();
-            pixels = new int[w * h];
-            image.getRGB(0, 0, w, h, pixels, 0, w);
+            width = image.getWidth();
+            height = image.getHeight();
+            tiles = new int[width * height];
+            image.getRGB(0, 0, width, height, tiles, 0, width);
             System.out.println("Level loaded successfully! ");
         } catch (IOException e) {
             e.printStackTrace();
@@ -33,11 +31,11 @@ public class SpawnLevel extends Level {
     public Tile getTile(int x, int y) {
         int i = x + y * width;
 
-        if (i < 0 || i >= 256) {
+        if (i < 0 || i >= tiles.length) {
             return Tiles.VOID;
         }
 
-        switch(pixels[i] & 0xffffff) {
+        switch(tiles[i] & 0xffffff) {
             case 0x4CD62C: {
                 return Tiles.GRASS_1;
             }
