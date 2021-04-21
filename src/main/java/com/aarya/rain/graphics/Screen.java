@@ -1,7 +1,6 @@
 package com.aarya.rain.graphics;
 
 import com.aarya.rain.entity.mob.Mob;
-import com.aarya.rain.entity.mob.Player;
 import com.aarya.rain.level.Tiles;
 import com.aarya.rain.level.tile.Tile;
 
