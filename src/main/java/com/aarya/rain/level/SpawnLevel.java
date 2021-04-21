@@ -32,27 +32,27 @@ public class SpawnLevel extends Level {
         int i = x + y * width;
 
         if (i < 0 || i >= tiles.length) {
-            return Tiles.VOID;
+            return Tile.VOID;
         }
 
-        switch(tiles[i] & 0xffffff) {
-            case 0x4CD62C: {
-                return Tiles.GRASS_1;
+        switch(tiles[i] & Tile.alpha_mask) {
+            case Tile.col_grass_1: {
+                return Tile.GRASS_1;
             }
-            case 0xABF42E: {
-                return Tiles.GRASS_2;
+            case Tile.col_grass_2: {
+                return Tile.GRASS_2;
             }
-            case 0x26DD95: {
-                return Tiles.TREE_1;
+            case Tile.col_tree_1: {
+                return Tile.TREE_1;
             }
-            case 0x838383: {
-                return Tiles.ROCK;
+            case Tile.col_rocks: {
+                return Tile.ROCK;
             }
-            case 0x2C7CD6: {
-                return Tiles.WATER;
+            case Tile.col_water: {
+                return Tile.WATER;
             }
             default: {
-                return Tiles.VOID;
+                return Tile.VOID;
             }
         }
 

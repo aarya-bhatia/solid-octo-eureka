@@ -23,28 +23,28 @@ public class RandomLevel extends Level {
 
     @Override
     public Tile getTile(int x, int y) {
-        if(x < 0 || x >= width || y < 0 || y >= height) return Tiles.VOID; // out of bounds
+        if(x < 0 || x >= width || y < 0 || y >= height) return Tile.VOID; // out of bounds
 
         int tmp = x + y * width;
 
         switch(tiles[tmp]) {
             case 0: {
-                return Tiles.GRASS_1;
+                return Tile.GRASS_1;
             }
             case 1: {
-                return Tiles.GRASS_2;
+                return Tile.GRASS_2;
             }
             case 2: {
-                return Tiles.ROCK;
+                return Tile.ROCK;
             }
             case 3: {
-                return tmp % 2 == 0 ? Tiles.TREE_1 : Tiles.TREE_2;
+                return tmp % 2 == 0 ? Tile.TREE_1 : Tile.TREE_2;
             }
             case 4: {
-                return Tiles.SHRUBS;
+                return Tile.SHRUBS;
             }
             default: {
-                return Tiles.VOID;
+                return Tile.VOID;
             }
         }
     }

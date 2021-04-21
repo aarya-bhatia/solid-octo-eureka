@@ -18,15 +18,15 @@ public abstract class Level {
         screen.setOffset(xScroll, yScroll);
 
         /* corner pins */
-        int x0 = xScroll >> screen.TILE_SIZE_FACTOR;
-        int x1 = (xScroll + screen.width + screen.TILE_SIZE_ACTUAL) >> screen.TILE_SIZE_FACTOR;
-        int y0 = yScroll >> screen.TILE_SIZE_FACTOR;
-        int y1 = (yScroll + screen.height + screen.TILE_SIZE_ACTUAL) >> screen.TILE_SIZE_FACTOR;
+        int x0 = xScroll >> screen.tile_factor;
+        int x1 = (xScroll + screen.width + screen.tile_size) >> screen.tile_factor;
+        int y0 = yScroll >> screen.tile_factor;
+        int y1 = (yScroll + screen.height + screen.tile_size) >> screen.tile_factor;
 
         /* render tiles */
         for(int y = y0; y < y1; y++) {
             for(int x = x0; x < x1; x++) {
-                getTile(x, y).render(x << screen.TILE_SIZE_FACTOR, y << screen.TILE_SIZE_FACTOR, screen);
+                getTile(x, y).render(x << screen.tile_factor, y << screen.tile_factor, screen);
             }
         }
     }
