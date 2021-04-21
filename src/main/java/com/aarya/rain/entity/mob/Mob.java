@@ -8,7 +8,7 @@ public abstract class Mob extends Entity {
 
     protected Sprite sprite;
     protected boolean moving = false;
-    protected int dir = 0; /* North = 0, East = 1, South = 2, West = 3 */
+    protected int dir = 0;
 
     public void move(int dx, int dy) {
         if(dx > 0) dir = 1;
@@ -22,13 +22,7 @@ public abstract class Mob extends Entity {
         }
     }
 
-    public void update() {}
-
     protected boolean collision(int dx, int dy){
-        if(level.getTile((x + dx) >> Screen.tile_factor, (y + dy) >> Screen.tile_factor).solid()) {
-            return true;
-        }
-        return false;
+        return level.getTile((x + dx) >> Screen.tile_factor, (y + dy) >> Screen.tile_factor).solid();
     }
-
 }

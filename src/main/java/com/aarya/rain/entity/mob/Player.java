@@ -6,11 +6,8 @@ import com.aarya.rain.input.Keyboard;
 
 public class Player extends Mob {
 
-    private Keyboard input;
-    private int animation = 0;
-    private boolean walking = false;
-
-    private static final short ANIMATION_SPEED = 40;
+    private final Keyboard input;
+    private short anim = 0;
 
     public Player(int x, int y, Keyboard input) {
         this.x = x;
@@ -35,27 +32,25 @@ public class Player extends Mob {
 
         if (dx != 0 || dy != 0) {
             move(dx, dy);
-            walking = true;
+            moving = true;
         }
         else {
-            walking = false;
+            moving = false;
         }
     }
 
     /* Cycle the sprite 2, 1, 2, 3, ... */
     private short nextAnimationFrame() {
-        animation = (animation + 1) % 9999;
+        anim = (short) ((anim + 1) % 1000);
 
         short tmp = 2;
 
-        if(walking) {
-            if(animation % ANIMATION_SPEED > (ANIMATION_SPEED >> 2)
-                    && animation % 40 < (ANIMATION_SPEED >> 1)) {
+        if(moving) {
+            short speed = 40;
+            if(anim % speed > (speed >> 2) && anim % 40 < (speed >> 1)) {
                 tmp = 1;
             }
-            else if(animation % ANIMATION_SPEED >
-                    ((ANIMATION_SPEED >> 1) + (ANIMATION_SPEED >> 2))
-                        && animation % ANIMATION_SPEED < ANIMATION_SPEED) {
+            else if(anim % speed > (speed >> 1) + (speed >> 2)) {
                 tmp = 3;
             }
         }
@@ -66,28 +61,11 @@ public class Player extends Mob {
     @Override
     public void render(Screen screen) {
         short tmp = nextAnimationFrame();
-
         switch (dir) {
-            case 0: {
-                // North
-                screen.renderPlayer(x, y, Sprite.SPRITES.get("characters.boy.north." + tmp));
-                break;
-            }
-            case 1: {
-                // East
-                screen.renderPlayer(x, y, Sprite.SPRITES.get("characters.boy.east." + tmp));
-                break;
-            }
-            case 2: {
-                // South
-                screen.renderPlayer(x, y, Sprite.SPRITES.get("characters.boy.south." + tmp));
-                break;
-            }
-            case 3: {
-                // West
-                screen.renderPlayer(x, y, Sprite.SPRITES.get("characters.boy.west." + tmp));
-                break;
-            }
+            case 0 -> screen.renderPlayer(x, y, Sprite.SPRITES.get("characters.boy.north." + tmp));
+            case 1 -> screen.renderPlayer(x, y, Sprite.SPRITES.get("characters.boy.east." + tmp));
+            case 2 -> screen.renderPlayer(x, y, Sprite.SPRITES.get("characters.boy.south." + tmp));
+            case 3 -> screen.renderPlayer(x, y, Sprite.SPRITES.get("characters.boy.west." + tmp));
         }
     }
 }
