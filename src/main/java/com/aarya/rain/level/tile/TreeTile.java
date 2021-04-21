@@ -13,4 +13,7 @@ public class TreeTile extends Tile {
         screen.renderTile(x, y, this);
     }
 
+    @Override
+    public boolean solid() { return true; }
+
 }

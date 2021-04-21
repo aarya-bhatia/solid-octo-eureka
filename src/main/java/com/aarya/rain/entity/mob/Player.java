@@ -12,18 +12,14 @@ public class Player extends Mob {
 
     private static final short ANIMATION_SPEED = 40;
 
-    public Player(Keyboard input) {
-        this.input = input;
-    }
-
     public Player(int x, int y, Keyboard input) {
         this.x = x;
         this.y = y;
         this.input = input;
     }
 
+    @Override
     public void update() {
-
         int dx = 0, dy = 0;
 
         if (input.up) {
@@ -67,6 +63,7 @@ public class Player extends Mob {
         return tmp;
     }
 
+    @Override
     public void render(Screen screen) {
         short tmp = nextAnimationFrame();
 

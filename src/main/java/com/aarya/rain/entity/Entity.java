@@ -12,17 +12,16 @@ public abstract class Entity {
     protected Level level;
     protected final static Random random = new Random();
 
-    public void update() {
+    public abstract void update();
 
-    }
-
-    public void render(Screen screen) {
-
-    }
+    public abstract void render(Screen screen);
 
     public void remove() {
-        /* remove from level */
         removed = true;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
     }
 
     public boolean isRemoved() {

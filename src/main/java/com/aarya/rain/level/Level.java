@@ -31,7 +31,7 @@ public abstract class Level {
         }
     }
 
-    protected abstract Tile getTile(int x, int y);
+    public abstract Tile getTile(int x, int y);
 
     // unused
     public void update() {}

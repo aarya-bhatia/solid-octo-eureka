@@ -47,7 +47,8 @@ public class Game extends Canvas implements Runnable {
 
         level = new SpawnLevel("/textures/level.png", 16, 16);
 
-        player = new Player(screen.width / 2, screen.height / 2, key);
+        player = new Player(0, screen.height / 2, key);
+        player.setLevel(level);
     }
 
     public synchronized void start() {
