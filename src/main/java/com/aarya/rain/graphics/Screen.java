@@ -9,11 +9,11 @@ import java.util.Random;
 
 public class Screen {
 
-    public static final short TILE_SIZE = 4;
+    public static final short TILE_SIZE_ACTUAL = Sprite.SIZE;
+    public static final short TILE_SIZE_FACTOR = 4;
     private static final short MAP_FACTOR = 3;
     private static final short MAP_SIZE = 1 << MAP_FACTOR;
     private static final short MAP_SIZE_MASK = MAP_SIZE - 1;
-    public static final short TILE_SIZE_ACTUAL = 1 << TILE_SIZE;
 
     public final int width;
     public final int height;
@@ -49,26 +49,26 @@ public class Screen {
     }
 
     private int getTileIndex(int x, int xx, int y, int yy) {
-        int xTmp = (xx >> TILE_SIZE) & MAP_SIZE_MASK;
-        int yTmp = (yy >> TILE_SIZE) & MAP_SIZE_MASK;
+        int xTmp = (xx >> TILE_SIZE_FACTOR) & MAP_SIZE_MASK;
+        int yTmp = (yy >> TILE_SIZE_FACTOR) & MAP_SIZE_MASK;
         yTmp = yTmp << MAP_FACTOR;
         return xTmp + yTmp;
     }
 
     public void renderTile(int tileX, int tileY, Tile tile) {
-        for (int y = 0; y < tile.sprite.size; y++) {
+        for (int y = 0; y < tile.sprite.SIZE; y++) {
             int yAbs = tileY - yOff + y;
-            for (int x = 0; x < tile.sprite.size; x++) {
+            for (int x = 0; x < tile.sprite.SIZE; x++) {
                 int xAbs = tileX - xOff + x;
                 if (!valid(xAbs, yAbs, tile.sprite)) {
                     break;
                 }
                 if (xAbs < 0) xAbs = 0;
 
-                int col = tile.sprite.pixels[x + y * tile.sprite.size];
+                int col = tile.sprite.pixels[x + y * tile.sprite.SIZE];
 
                 if(!hideColor(col)) {
-                    pixels[xAbs + yAbs * width] = tile.sprite.pixels[x + y * tile.sprite.size];
+                    pixels[xAbs + yAbs * width] = tile.sprite.pixels[x + y * tile.sprite.SIZE];
                 }
                 else {
                     pixels[xAbs + yAbs * width] = hiddenColor;
@@ -82,19 +82,19 @@ public class Screen {
     }
 
     public void renderPlayer(int playerX, int playerY, Sprite sprite) {
-        for (int y = 0; y < sprite.size; y++) {
+        for (int y = 0; y < sprite.SIZE; y++) {
             int yAbs = playerY - yOff + y;
-            for (int x = 0; x < sprite.size; x++) {
+            for (int x = 0; x < sprite.SIZE; x++) {
                 int xAbs = playerX - xOff + x;
                 if (!valid(xAbs, yAbs, sprite)) {
                     break;
                 }
                 if (xAbs < 0) xAbs = 0;
 
-                int col = sprite.pixels[x + y * sprite.size];
+                int col = sprite.pixels[x + y * sprite.SIZE];
 
                 if (!hideColor(col)){
-                    pixels[xAbs + yAbs * width] = sprite.pixels[x + y * sprite.size];
+                    pixels[xAbs + yAbs * width] = sprite.pixels[x + y * sprite.SIZE];
                 }
             }
         }
@@ -118,7 +118,7 @@ public class Screen {
     }
 
     private boolean valid(int x, int y, Sprite sprite) {
-        return x >= -sprite.size && x < width && y >= 0 && y < height;
+        return x >= -sprite.SIZE && x < width && y >= 0 && y < height;
     }
 
 }

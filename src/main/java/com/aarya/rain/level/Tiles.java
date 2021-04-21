@@ -11,4 +11,14 @@ public class Tiles {
     public static final Tile VOID = new VoidTile(Sprite.SPRITES.get("void"));
     public static final Tile TREE_1 = new TreeTile(Sprite.SPRITES.get("basic.tiles.tree.1"));
     public static final Tile TREE_2 = new TreeTile(Sprite.SPRITES.get("basic.tiles.tree.2"));
+    public static final Tile WATER = new WaterTile(Sprite.SPRITES.get("basic.tiles.water"));
 }
+
+/*
+Grass 1 0x4CD62C
+Rocks 0x838383
+Tree 1 0x26DD95
+Grass 2 0xABF42E
+Water 0x2C7CD6
+Void
+ */

@@ -5,6 +5,7 @@ import com.aarya.rain.graphics.Screen;
 import com.aarya.rain.input.Keyboard;
 import com.aarya.rain.level.Level;
 import com.aarya.rain.level.RandomLevel;
+import com.aarya.rain.level.SpawnLevel;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -33,6 +34,7 @@ public class Game extends Canvas implements Runnable {
     private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 
     private Level level;
+    private Level spawnLevel;
     private boolean displayDebugOnWindow = true;
 
     public Game() {
@@ -46,6 +48,7 @@ public class Game extends Canvas implements Runnable {
         requestFocus();
 
         level = new RandomLevel(64, 64);
+        spawnLevel = new SpawnLevel("/textures/level.png", 16, 16);
         player = new Player(key);
     }
 
@@ -112,7 +115,8 @@ public class Game extends Canvas implements Runnable {
         int xScroll = player.x - screen.width/2;
         int yScroll = player.y - screen.height/2;
 
-        level.render(xScroll, yScroll, screen);
+//        level.render(xScroll, yScroll, screen);
+        spawnLevel.render(xScroll, yScroll, screen);
         player.render(screen);
 
         System.arraycopy(screen.getPixels(), 0, pixels, 0, pixels.length);
