@@ -12,4 +12,9 @@ public class WaterTile extends Tile {
     public void render(int x, int y, Screen screen) {
         screen.renderTile(x, y, this);
     }
+
+    @Override
+    public boolean solid() {
+        return false;
+    }
 }

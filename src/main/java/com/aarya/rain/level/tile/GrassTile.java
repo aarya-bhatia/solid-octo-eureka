@@ -14,4 +14,9 @@ public class GrassTile extends Tile {
         screen.renderTile(x, y, this);
     }
 
+    @Override
+    public boolean solid() {
+        return false;
+    }
+
 }

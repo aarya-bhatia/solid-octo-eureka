@@ -30,5 +30,5 @@ public abstract class Tile {
 
     public abstract void render(int x, int y, Screen screen);
 
-    public boolean solid() { return false; }
+    public abstract boolean solid();
 }

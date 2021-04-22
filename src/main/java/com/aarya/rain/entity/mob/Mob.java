@@ -16,13 +16,23 @@ public abstract class Mob extends Entity {
         if(dy > 0) dir = 2;
         if(dy < 0) dir = 0;
 
-        if(!collision(dx, dy)) {
+        if(!collision(dx, 0)) {
             x += dx;
+        }
+
+        if(!collision(0, dy)) {
             y += dy;
         }
     }
 
     protected boolean collision(int dx, int dy){
-        return level.getTile((x + dx) >> Screen.tile_factor, (y + dy) >> Screen.tile_factor).solid();
+        for(int c = 0; c < 4; c++) {
+            int xt = ((x + dx) + c % 2);
+            int yt = ((y + dy) + c / 2 * 12 + 3);
+            if(level.getTile(xt >> Screen.tile_factor, yt >> Screen.tile_factor).solid()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

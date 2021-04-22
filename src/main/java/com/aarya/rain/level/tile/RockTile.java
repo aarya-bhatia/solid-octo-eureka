@@ -13,7 +13,8 @@ public class RockTile extends Tile {
         screen.renderTile(x, y, this);
     }
 
-    public boolean isSolid() {
+    @Override
+    public boolean solid() {
         return true;
     }
 }

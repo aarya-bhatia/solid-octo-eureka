@@ -128,7 +128,7 @@ public class Game extends Canvas implements Runnable {
 
         if (displayDebugOnWindow) {
             g.setColor(Color.WHITE);
-            g.drawString(String.format("X: %d, Y: %d", player.x, player.y), 450, 400);
+            g.drawString(String.format("X: %d, Y: %d", player.x, player.y), 500, 400);
         }
 
         g.dispose();
