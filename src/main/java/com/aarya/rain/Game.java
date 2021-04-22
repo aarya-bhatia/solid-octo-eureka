@@ -133,8 +133,14 @@ public class Game extends Canvas implements Runnable {
 
         if (displayDebugOnWindow) {
             g.setColor(Color.WHITE);
-            g.drawString(String.format("X: %d, Y: %d", player.x, player.y), 500, 400);
+            g.drawString(String.format("Map X: %d, Y: %d", player.x, player.y), 500, 400);
         }
+
+        g.setColor(Color.white);
+        g.fillRect(Mouse.getX() - 8, Mouse.getY() - 8, 16, 16);
+
+        g.drawString(String.format("MOUSE X:%d Y:%d Btn:%d",
+                Mouse.getX(), Mouse.getY(), Mouse.getButton()), 50, 50);
 
         g.dispose();
         bs.show();
