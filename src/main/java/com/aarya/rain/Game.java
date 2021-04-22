@@ -16,7 +16,8 @@ import javax.swing.JFrame;
 public class Game extends Canvas implements Runnable {
 
     public static boolean debug = false;
-    private static boolean displayDebugOnWindow = true;
+    private static final boolean displayDebugOnWindow = true;
+    private volatile boolean running = false;
 
     public final static int width = 300;
     public final static int height = width / 16 * 9;
@@ -24,16 +25,14 @@ public class Game extends Canvas implements Runnable {
     public final static String title = "Rain";
 
     private Thread thread;
-    private JFrame frame;
-    private Screen screen = new Screen(width, height);
-    private Keyboard key;
-    private Player player;
-    private Level level;
+    private final JFrame frame;
+    private final Screen screen = new Screen(width, height);
+    private final Keyboard key;
+    private final Player player;
+    private final Level level;
 
-    private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB); // main view
-    private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
-
-    private volatile boolean running = false;
+    private final BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB); // main view
+    private final int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 
     public Game() {
         Dimension size = new Dimension(width * scale, height * scale);
@@ -121,7 +120,7 @@ public class Game extends Canvas implements Runnable {
 
         Graphics g = bs.getDrawGraphics();
 
-        g.setFont(new Font("Verdana", 0, 30));
+        g.setFont(new Font("Verdana", Font.PLAIN, 30));
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, getWidth(), getHeight());
         g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
