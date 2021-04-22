@@ -1,7 +1,6 @@
 package com.aarya.rain.entity.mob;
 
 import com.aarya.rain.entity.Entity;
-import com.aarya.rain.graphics.Screen;
 import com.aarya.rain.graphics.Sprite;
 
 public abstract class Mob extends Entity {
@@ -33,7 +32,7 @@ public abstract class Mob extends Entity {
         for(int c = 0; c < 4; c++) {
             int xt = ((x + dx) + c % 2);
             int yt = ((y + dy) + c / 2 * 12 + 3);
-            if(level.getTile(xt >> Screen.tile_factor, yt >> Screen.tile_factor).solid()) {
+            if(level.getTile(xt >> Sprite.FACTOR, yt >> Sprite.FACTOR).solid()) {
                 return true;
             }
         }

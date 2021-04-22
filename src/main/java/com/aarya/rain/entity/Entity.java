@@ -1,6 +1,6 @@
 package com.aarya.rain.entity;
 
-import com.aarya.rain.graphics.Screen;
+import com.aarya.rain.graphics.Renderer;
 import com.aarya.rain.level.Level;
 
 public abstract class Entity {
@@ -36,5 +36,5 @@ public abstract class Entity {
 
     public abstract void update();
 
-    public abstract void render(Screen screen);
+    public abstract void render(Renderer renderer);
 }

@@ -1,6 +1,6 @@
 package com.aarya.rain.level.tile;
 
-import com.aarya.rain.graphics.Screen;
+import com.aarya.rain.graphics.Renderer;
 import com.aarya.rain.graphics.Sprite;
 
 public abstract class Tile {
@@ -28,7 +28,7 @@ public abstract class Tile {
         this.sprite = sprite;
     }
 
-    public abstract void render(int x, int y, Screen screen);
+    public abstract void render(int x, int y, Renderer renderer);
 
     public abstract boolean solid();
 }

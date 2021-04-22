@@ -8,77 +8,76 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferInt;
 
-public class Window extends Canvas {
+public class Window {
 
+    private final Canvas canvas;
     private final JFrame frame;
     private final BufferedImage image;
-    private final int[] pixels;
-    private final Screen screen;
     private final Game game;
+    private final Renderer renderer;
 
     public Window(Game game) {
         this.game = game;
-        this.screen = new Screen(game.getWidth(), game.getHeight());
 
-        this.setPreferredSize(new Dimension(game.getWidthScaled(), game.getHeightScaled()));
+        this.canvas = new Canvas();
+        this.canvas.setPreferredSize(new Dimension(game.getWidthScaled(), game.getHeightScaled()));
 
         this.image = new BufferedImage(game.getWidth(), game.getHeight(), BufferedImage.TYPE_INT_RGB);
-        this.pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+        this.renderer = new Renderer(image, game.getWidth(), game.getHeight());
 
-        this.addKeyListener(Keyboard.INSTANCE);
-        this.addMouseListener(Mouse.INSTANCE);
-        this.addMouseMotionListener(Mouse.INSTANCE);
-        this.requestFocus();
+        this.canvas.addKeyListener(Keyboard.INSTANCE);
+        this.canvas.addMouseListener(Mouse.INSTANCE);
+        this.canvas.addMouseMotionListener(Mouse.INSTANCE);
+        this.canvas.requestFocus();
 
         this.frame = new JFrame();
         this.frame.setResizable(false);
         this.frame.setTitle(game.getTitle());
-        this.frame.add(this);
+        this.frame.add(this.canvas);
         this.frame.pack();
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.frame.setLocationRelativeTo(null);
         this.frame.setVisible(true);
+
+        if (this.canvas.getBufferStrategy() == null) {
+            this.canvas.createBufferStrategy(3);
+        }
     }
 
     public void render() {
-        BufferStrategy bs = getBufferStrategy();
-        if (bs == null) {
-            createBufferStrategy(3);
-            return;
-        }
+        BufferStrategy buffer = this.canvas.getBufferStrategy();
 
-        screen.clear();
+        renderer.clear();
 
         int xScroll = this.game.getPlayer().getX() - this.game.getWidth() / 2;
         int yScroll = this.game.getPlayer().getY() - this.game.getHeight() / 2;
 
-        this.game.getLevel().render(xScroll, yScroll, screen);
-        this.game.getPlayer().render(screen);
+        this.renderer.setXOff(xScroll);
+        this.renderer.setYOff(yScroll);
 
-        System.arraycopy(screen.getPixels(), 0, pixels, 0, pixels.length);
+        this.game.getLevel().render(xScroll, yScroll, this.renderer);
+//        this.game.getPlayer().render(renderer);
 
-        Graphics g = bs.getDrawGraphics();
+        Graphics g = buffer.getDrawGraphics();
 
         g.setFont(new Font("Verdana", Font.PLAIN, 30));
         g.setColor(Color.BLACK);
-        g.fillRect(0, 0, getWidth(), getHeight());
-        g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+        g.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        g.drawImage(image, 0, 0, canvas.getWidth(), canvas.getHeight(), null);
 
-        if (Game.displayDebugOnWindow) {
-            g.setColor(Color.WHITE);
-            g.drawString(String.format("Map X: %d, Y: %d", this.game.getPlayer().getX(), this.game.getPlayer().getY()), 500, 400);
-        }
+        g.setColor(Color.WHITE);
+        g.drawString(String.format("Map X: %d, Y: %d", this.game.getPlayer().getX(), this.game.getPlayer().getY()), 500, 400);
 
-//        g.setColor(Color.white);
-//        g.fillRect(Mouse.getX() - 8, Mouse.getY() - 8, 16, 16);
-//
-//        g.drawString(String.format("MOUSE X:%d Y:%d Btn:%d",
-//                Mouse.getX(), Mouse.getY(), Mouse.getButton()), 50, 50);
+        g.setColor(Color.white);
+        g.fillRect(Mouse.getX() - 8, Mouse.getY() - 8, 16, 16);
+
+        g.drawString(String.format("MOUSE X:%d Y:%d Btn:%d",
+                Mouse.getX(), Mouse.getY(), Mouse.getButton()), 50, 50);
 
         g.dispose();
-        bs.show();
+
+        buffer.show();
     }
 
     public JFrame getJFrame() {

@@ -1,6 +1,6 @@
 package com.aarya.rain.level.tile;
 
-import com.aarya.rain.graphics.Screen;
+import com.aarya.rain.graphics.Renderer;
 import com.aarya.rain.graphics.Sprite;
 
 public class GrassTile extends Tile {
@@ -10,8 +10,8 @@ public class GrassTile extends Tile {
     }
 
     @Override
-    public void render(int x, int y, Screen screen) {
-        screen.renderTile(x, y, this);
+    public void render(int x, int y, Renderer renderer) {
+        renderer.renderTile(x, y, this);
     }
 
     @Override

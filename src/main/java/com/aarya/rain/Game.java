@@ -8,19 +8,19 @@ import com.aarya.rain.level.SpawnLevel;
 
 public class Game implements Runnable {
 
-    public static boolean debug = false;
-    public static final boolean displayDebugOnWindow = true;
-    private volatile boolean running = false;
-
     private final int WIDTH = 300;
-    private final int HEIGHT = WIDTH / 16 * 9;
+    private final int HEIGHT = (WIDTH / 16 * 9);
     private final int SCALE = 3;
     private final String TITLE = "Rain";
+    private final double ns = (1e9) / 60.0;
 
-    private Thread thread;
+    public static boolean debug = false;
+
+    private volatile boolean running = false;
     private final Player player;
     private final Level level;
     private final Window window;
+    private Thread thread;
 
     public Game() {
         window = new Window(this);
@@ -57,6 +57,10 @@ public class Game implements Runnable {
         return level;
     }
 
+    public Window getWindow() {
+        return window;
+    }
+
     public synchronized void start() {
         running = true;
         thread = new Thread(this, "Game");
@@ -74,7 +78,6 @@ public class Game implements Runnable {
 
     public void run() {
         long lastTime = System.nanoTime();
-        final double ns = (1e9) / 60.0;
         long timer = System.currentTimeMillis();
         double delta = 0;
         int frames = 0;
@@ -104,7 +107,6 @@ public class Game implements Runnable {
     }
 
     public void update() {
-        Keyboard.INSTANCE.update();
         player.update();
     }
 

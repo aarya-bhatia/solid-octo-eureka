@@ -1,7 +1,6 @@
 package com.aarya.rain.entity.mob;
 
-import com.aarya.rain.Game;
-import com.aarya.rain.graphics.Screen;
+import com.aarya.rain.graphics.Renderer;
 import com.aarya.rain.graphics.Sprite;
 import com.aarya.rain.input.Keyboard;
 import com.aarya.rain.input.Mouse;
@@ -21,14 +20,14 @@ public class Player extends Mob {
     public void update() {
         int dx = 0, dy = 0;
 
-        if (input.up) {
+        if (input.up()) {
             dy--;
-        } else if (input.down) {
+        } else if (input.down()) {
             dy++;
         }
-        if (input.right) {
+        if (input.right()) {
             dx++;
-        } else if (input.left) {
+        } else if (input.left()) {
             dx--;
         }
 
@@ -71,13 +70,13 @@ public class Player extends Mob {
     }
 
     @Override
-    public void render(Screen screen) {
+    public void render(Renderer renderer) {
         short tmp = nextAnimationFrame();
         switch (dir) {
-            case 0 -> screen.renderPlayer(x, y, Sprite.SPRITES.get("characters.boy.north." + tmp));
-            case 1 -> screen.renderPlayer(x, y, Sprite.SPRITES.get("characters.boy.east." + tmp));
-            case 2 -> screen.renderPlayer(x, y, Sprite.SPRITES.get("characters.boy.south." + tmp));
-            case 3 -> screen.renderPlayer(x, y, Sprite.SPRITES.get("characters.boy.west." + tmp));
+            case 0 -> renderer.renderPlayer(x, y, Sprite.SPRITES.get("characters.boy.north." + tmp));
+            case 1 -> renderer.renderPlayer(x, y, Sprite.SPRITES.get("characters.boy.east." + tmp));
+            case 2 -> renderer.renderPlayer(x, y, Sprite.SPRITES.get("characters.boy.south." + tmp));
+            case 3 -> renderer.renderPlayer(x, y, Sprite.SPRITES.get("characters.boy.west." + tmp));
         }
     }
 }

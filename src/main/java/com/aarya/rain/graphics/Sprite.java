@@ -7,6 +7,8 @@ import java.util.HashMap;
 public class Sprite {
 
     public static final int SIZE = 16;
+    public static final int FACTOR = 4;
+
     private int x, y;
     public int[] pixels;
     private SpriteSheet sheet;

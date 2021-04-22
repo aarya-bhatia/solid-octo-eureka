@@ -1,6 +1,7 @@
 package com.aarya.rain.level;
 
-import com.aarya.rain.graphics.Screen;
+import com.aarya.rain.graphics.Renderer;
+import com.aarya.rain.graphics.Sprite;
 import com.aarya.rain.level.tile.*;
 
 public abstract class Level {
@@ -14,25 +15,19 @@ public abstract class Level {
         this.tiles = new int[width * height];
     }
 
-    public void render(int xScroll, int yScroll, Screen screen) {
-        screen.setOffset(xScroll, yScroll); /* like the camera */
+    public void render(int xScroll, int yScroll, Renderer renderer) {
+        int x0 = xScroll >> Sprite.FACTOR;
+        int x1 = (xScroll + width + Sprite.SIZE) >> Sprite.FACTOR;
+        int y0 = yScroll >> Sprite.FACTOR;
+        int y1 = (yScroll + height + Sprite.SIZE) >> Sprite.FACTOR;
 
-        /* corner pins */
-        int x0 = xScroll >> Screen.tile_factor;
-        int x1 = (xScroll + width + Screen.tile_size) >> Screen.tile_factor;
-        int y0 = yScroll >> Screen.tile_factor;
-        int y1 = (yScroll + height + Screen.tile_size) >> Screen.tile_factor;
-
-        /* render tiles */
         for(int y = y0; y < y1; y++) {
             for(int x = x0; x < x1; x++) {
-                getTile(x, y).render(x << Screen.tile_factor, y << Screen.tile_factor, screen);
+                Tile tile = this.getTile(x, y);
+                tile.render(x << Sprite.FACTOR, y << Sprite.FACTOR, renderer);
             }
         }
     }
 
     public abstract Tile getTile(int x, int y);
-
-    // unused
-    public void update() {}
 }
