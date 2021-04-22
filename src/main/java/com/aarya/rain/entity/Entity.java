@@ -2,19 +2,39 @@ package com.aarya.rain.entity;
 
 import com.aarya.rain.graphics.Screen;
 import com.aarya.rain.level.Level;
-import com.aarya.rain.level.TileCoord;
 
 public abstract class Entity {
 
-    public int x,y;
-//    public TileCoord coord;
+    protected int x,y;
     protected Level level;
 
-    public abstract void update();
+    public Entity() {}
 
-    public abstract void render(Screen screen);
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
 
     public void setLevel(Level level) {
         this.level = level;
     }
+
+    public abstract void update();
+
+    public abstract void render(Screen screen);
 }

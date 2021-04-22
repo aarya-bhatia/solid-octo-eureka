@@ -6,6 +6,11 @@ import java.awt.event.MouseMotionListener;
 
 public class Mouse implements MouseListener, MouseMotionListener {
 
+    public static final Mouse INSTANCE = new Mouse();
+
+    public static final short LEFT_CLICK = 1;
+    public static final short RIGHT_CLICK = 3;
+
     private static int mouseX = -1;
     private static int mouseY = -1;
     private static int mouseButton = -1;

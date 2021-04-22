@@ -1,8 +1,10 @@
 package com.aarya.rain.entity.mob;
 
+import com.aarya.rain.Game;
 import com.aarya.rain.graphics.Screen;
 import com.aarya.rain.graphics.Sprite;
 import com.aarya.rain.input.Keyboard;
+import com.aarya.rain.input.Mouse;
 
 public class Player extends Mob {
 
@@ -36,6 +38,16 @@ public class Player extends Mob {
         }
         else {
             moving = false;
+        }
+
+        updateShooting();
+    }
+
+    private void updateShooting() {
+        if(Mouse.getButton() == Mouse.LEFT_CLICK) {
+//            double dy = Mouse.getY() - (Game.height * Game.scale) / 2;
+//            double dx = Mouse.getX() - (Game.width * Game.scale) / 2;
+//            shoot(x, y, Math.atan2(dy, dx));
         }
     }
 

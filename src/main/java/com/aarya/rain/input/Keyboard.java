@@ -7,11 +7,13 @@ import java.awt.event.KeyListener;
 
 public class Keyboard implements KeyListener {
 
-    private static final int NUM_KEYS = 120;
-    private final boolean[] keys = new boolean[NUM_KEYS];
-    public boolean up, down, left, right;
+    public static final Keyboard INSTANCE = new Keyboard();
 
-    public void update() {
+    private static final int NUM_KEYS = 120;
+    private static final boolean[] keys = new boolean[NUM_KEYS];
+    public static boolean up, down, left, right;
+
+    public static void update() {
         up = keys[KeyEvent.VK_UP] || keys[KeyEvent.VK_W];
         down = keys[KeyEvent.VK_DOWN] || keys[KeyEvent.VK_S];
         left = keys[KeyEvent.VK_LEFT] || keys[KeyEvent.VK_A];
@@ -39,11 +41,13 @@ public class Keyboard implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        keys[e.getKeyCode()] = true;
+        if(e.getKeyCode() < keys.length)
+            keys[e.getKeyCode()] = true;
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        keys[e.getKeyCode()] = false;
+        if(e.getKeyCode() < keys.length)
+            keys[e.getKeyCode()] = false;
     }
 }

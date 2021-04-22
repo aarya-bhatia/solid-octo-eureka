@@ -1,59 +1,60 @@
 package com.aarya.rain;
 
 import com.aarya.rain.entity.mob.Player;
-import com.aarya.rain.graphics.Screen;
+import com.aarya.rain.graphics.Window;
 import com.aarya.rain.input.Keyboard;
-import com.aarya.rain.input.Mouse;
 import com.aarya.rain.level.Level;
 import com.aarya.rain.level.SpawnLevel;
 
-import java.awt.*;
-import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferInt;
-
-import javax.swing.JFrame;
-
-public class Game extends Canvas implements Runnable {
+public class Game implements Runnable {
 
     public static boolean debug = false;
-    private static final boolean displayDebugOnWindow = true;
+    public static final boolean displayDebugOnWindow = true;
     private volatile boolean running = false;
 
-    public final static int width = 300;
-    public final static int height = width / 16 * 9;
-    public final static int scale = 3;
-    public final static String title = "Rain";
+    private final int WIDTH = 300;
+    private final int HEIGHT = WIDTH / 16 * 9;
+    private final int SCALE = 3;
+    private final String TITLE = "Rain";
 
     private Thread thread;
-    private final JFrame frame;
-    private final Screen screen = new Screen(width, height);
-    private final Keyboard key;
     private final Player player;
     private final Level level;
-    private final Mouse mouse;
-
-    private final BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB); // main view
-    private final int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+    private final Window window;
 
     public Game() {
-        Dimension size = new Dimension(width * scale, height * scale);
-        setPreferredSize(size);
-
-        key = new Keyboard();
-        addKeyListener(key);
-
-        mouse = new Mouse();
-        addMouseListener(mouse);
-        addMouseMotionListener(mouse);
-
-        frame = new JFrame();
-        requestFocus();
-
+        window = new Window(this);
         level = new SpawnLevel("/textures/level.png", 16, 16);
-
-        player = new Player(0, screen.height / 2, key);
+        player = new Player(0, HEIGHT / 2, Keyboard.INSTANCE);
         player.setLevel(level);
+    }
+
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    public int getHeight() {
+        return HEIGHT;
+    }
+
+    public int getWidthScaled() {
+        return WIDTH * SCALE;
+    }
+
+    public int getHeightScaled() {
+        return HEIGHT * SCALE;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public String getTitle() {
+        return TITLE;
+    }
+
+    public Level getLevel() {
+        return level;
     }
 
     public synchronized void start() {
@@ -90,12 +91,12 @@ public class Game extends Canvas implements Runnable {
                 updates++;
             }
 
-            render();
+            window.render();
             frames++;
 
             if (System.currentTimeMillis() - timer > 1000) {
                 timer = System.currentTimeMillis();
-                frame.setTitle(title + " | FPS: " + frames + " | UPS: " + updates);
+                window.getJFrame().setTitle(TITLE + " | FPS: " + frames + " | UPS: " + updates);
                 updates = frames = 0;
             }
         }
@@ -103,58 +104,13 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void update() {
-        key.update();
+        Keyboard.INSTANCE.update();
         player.update();
-    }
-
-    public void render() {
-        BufferStrategy bs = getBufferStrategy();
-        if (bs == null) {
-            createBufferStrategy(3);
-            return;
-        }
-
-        screen.clear();
-
-        int xScroll = player.x - screen.width / 2;
-        int yScroll = player.y - screen.height / 2;
-
-        level.render(xScroll, yScroll, screen);
-        player.render(screen);
-
-        System.arraycopy(screen.getPixels(), 0, pixels, 0, pixels.length);
-
-        Graphics g = bs.getDrawGraphics();
-
-        g.setFont(new Font("Verdana", Font.PLAIN, 30));
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, getWidth(), getHeight());
-        g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
-
-        if (displayDebugOnWindow) {
-            g.setColor(Color.WHITE);
-            g.drawString(String.format("Map X: %d, Y: %d", player.x, player.y), 500, 400);
-        }
-
-        g.setColor(Color.white);
-        g.fillRect(Mouse.getX() - 8, Mouse.getY() - 8, 16, 16);
-
-        g.drawString(String.format("MOUSE X:%d Y:%d Btn:%d",
-                Mouse.getX(), Mouse.getY(), Mouse.getButton()), 50, 50);
-
-        g.dispose();
-        bs.show();
     }
 
     public static void main(String[] args) {
         Game game = new Game();
-        game.frame.setResizable(false);
-        game.frame.setTitle(title);
-        game.frame.add(game);
-        game.frame.pack();
-        game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        game.frame.setLocationRelativeTo(null);
-        game.frame.setVisible(true);
         game.start();
     }
+
 }

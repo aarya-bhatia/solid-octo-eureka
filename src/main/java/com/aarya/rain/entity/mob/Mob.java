@@ -25,6 +25,10 @@ public abstract class Mob extends Entity {
         }
     }
 
+    protected void shoot(int x, int y, double dir) {
+        System.out.println(Math.toDegrees(dir));
+    }
+
     protected boolean collision(int dx, int dy){
         for(int c = 0; c < 4; c++) {
             int xt = ((x + dx) + c % 2);

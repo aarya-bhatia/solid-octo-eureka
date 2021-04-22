@@ -8,8 +8,8 @@ import java.util.Arrays;
 public class Screen {
     public static final short tile_size = 16;
     public static final short tile_factor = 4;
-    public final int width;
-    public final int height;
+    private final int width;
+    private final int height;
     private final int[] pixels;
     public int xOff = 0;
     public int yOff = 0;
@@ -17,9 +17,9 @@ public class Screen {
     private static final int hiddenColor = Tile.GRASS_1.sprite.pixels[0];
 
     public Screen(int w, int h) {
-        width = w;
-        height = h;
-        pixels = new int[w * h];
+        this.width = w;
+        this.height = h;
+        this.pixels = new int[w * h];
     }
 
     public int[] getPixels() {

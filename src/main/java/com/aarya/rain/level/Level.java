@@ -19,9 +19,9 @@ public abstract class Level {
 
         /* corner pins */
         int x0 = xScroll >> Screen.tile_factor;
-        int x1 = (xScroll + screen.width + Screen.tile_size) >> Screen.tile_factor;
+        int x1 = (xScroll + width + Screen.tile_size) >> Screen.tile_factor;
         int y0 = yScroll >> Screen.tile_factor;
-        int y1 = (yScroll + screen.height + Screen.tile_size) >> Screen.tile_factor;
+        int y1 = (yScroll + height + Screen.tile_size) >> Screen.tile_factor;
 
         /* render tiles */
         for(int y = y0; y < y1; y++) {
