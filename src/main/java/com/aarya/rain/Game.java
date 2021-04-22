@@ -3,6 +3,7 @@ package com.aarya.rain;
 import com.aarya.rain.entity.mob.Player;
 import com.aarya.rain.graphics.Screen;
 import com.aarya.rain.input.Keyboard;
+import com.aarya.rain.input.Mouse;
 import com.aarya.rain.level.Level;
 import com.aarya.rain.level.SpawnLevel;
 
@@ -30,6 +31,7 @@ public class Game extends Canvas implements Runnable {
     private final Keyboard key;
     private final Player player;
     private final Level level;
+    private final Mouse mouse;
 
     private final BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB); // main view
     private final int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
@@ -40,6 +42,10 @@ public class Game extends Canvas implements Runnable {
 
         key = new Keyboard();
         addKeyListener(key);
+
+        mouse = new Mouse();
+        addMouseListener(mouse);
+        addMouseMotionListener(mouse);
 
         frame = new JFrame();
         requestFocus();
