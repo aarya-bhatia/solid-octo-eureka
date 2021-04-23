@@ -15,13 +15,16 @@ public abstract class Mob extends Entity {
         if(dy > 0) dir = 2;
         if(dy < 0) dir = 0;
 
-        if(!collision(dx, 0)) {
-            x += dx;
-        }
+//        if(!collision(dx, 0)) {
+//            x += dx;
+//        }
+//
+//        if(!collision(0, dy)) {
+//            y += dy;
+//        }
 
-        if(!collision(0, dy)) {
-            y += dy;
-        }
+        x+=dx;
+        y+=dy;
     }
 
     protected void shoot(int x, int y, double dir) {

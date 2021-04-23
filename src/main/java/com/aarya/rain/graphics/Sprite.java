@@ -106,4 +106,8 @@ public class Sprite {
             }
         }
     }
+
+    public int getPixel(int x, int y) {
+        return pixels[x + y * SIZE];
+    }
 }

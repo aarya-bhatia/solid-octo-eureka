@@ -21,6 +21,10 @@ public abstract class Level {
         int y0 = yScroll >> Sprite.FACTOR;
         int y1 = (yScroll + height + Sprite.SIZE) >> Sprite.FACTOR;
 
+        x0 = y0 = 0;
+        x1 = 300;
+        y1 = 300/16 * 9;
+
         for(int y = y0; y < y1; y++) {
             for(int x = x0; x < x1; x++) {
                 Tile tile = this.getTile(x, y);

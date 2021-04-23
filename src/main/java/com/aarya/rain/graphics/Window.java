@@ -57,7 +57,7 @@ public class Window {
         this.renderer.setYOff(yScroll);
 
         this.game.getLevel().render(xScroll, yScroll, this.renderer);
-//        this.game.getPlayer().render(renderer);
+        this.game.getPlayer().render(renderer);
 
         Graphics g = buffer.getDrawGraphics();
 

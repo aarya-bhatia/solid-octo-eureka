@@ -55,22 +55,15 @@ public class Renderer {
     public void renderTile(int X, int Y, Tile tile) {
         for (int y = 0; y < Sprite.SIZE; y++) {
             int yAbs = Y - yOff + y;
-
             for (int x = 0; x < Sprite.SIZE; x++) {
-
                 int xAbs = X - xOff + x;
-
-                if (!valid(xAbs, yAbs)) {
-                    break;
-                }
-
+                if (!valid(xAbs, yAbs)) { break; }
                 if (xAbs < 0) xAbs = 0;
-
-                int col = tile.sprite.pixels[x + y * Sprite.SIZE];
-
-                if (!hideColor(col) || tile instanceof VoidTile) {
+                int col = tile.sprite.getPixel(x, y);
+                if (!hideColor(col)) {
                     setPixel(xAbs, yAbs, col);
-                } else {
+                }
+                else {
                     setPixel(xAbs, yAbs, hiddenColor);
                 }
             }
@@ -82,16 +75,11 @@ public class Renderer {
             int yAbs = Y - yOff + y;
             for (int x = 0; x < Sprite.SIZE; x++) {
                 int xAbs = X - xOff + x;
-
-                if (!valid(xAbs, yAbs)) {
-                    break;
-                }
+                if (!valid(xAbs, yAbs)) { break; }
                 if (xAbs < 0) xAbs = 0;
-
-                int col = sprite.pixels[x + y * Sprite.SIZE];
-
+                int col = sprite.getPixel(x, y);
                 if (!hideColor(col)) {
-                    pixels[xAbs + yAbs * width] = sprite.pixels[x + y * Sprite.SIZE];
+                    setPixel(xAbs, yAbs, col);
                 }
             }
         }
