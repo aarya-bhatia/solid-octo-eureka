@@ -1,13 +1,20 @@
 package com.aarya.rain.level;
 
+import com.aarya.rain.entity.Entity;
 import com.aarya.rain.graphics.Renderer;
 import com.aarya.rain.graphics.Sprite;
 import com.aarya.rain.level.tile.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Level {
 
     protected int width, height;
     protected int[] tiles;
+
+    private List<Entity> entities = new ArrayList<>();
+
 
     public Level(int width, int height) {
         this.width = width;
@@ -30,6 +37,20 @@ public abstract class Level {
                 Tile tile = this.getTile(x, y);
                 tile.render(x << Sprite.FACTOR, y << Sprite.FACTOR, renderer);
             }
+        }
+
+        for(Entity e: entities) {
+            e.render(renderer);
+        }
+    }
+
+    public void add(Entity e) {
+        entities.add(e);
+    }
+
+    public void update() {
+        for(Entity e: entities) {
+            e.update();
         }
     }
 

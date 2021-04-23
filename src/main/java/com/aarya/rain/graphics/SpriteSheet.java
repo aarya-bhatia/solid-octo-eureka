@@ -27,13 +27,10 @@ public class SpriteSheet {
 
     private void load() {
         URL imagePath = SpriteSheet.class.getResource(path);
-        if(Game.debug) {
-            System.out.println("Loading sprite sheet: " + imagePath.getPath());
-        }
         try {
             BufferedImage image = ImageIO.read(imagePath);
             image.getRGB(0, 0, image.getWidth(), image.getHeight(), pixels, 0, image.getWidth());
-            System.out.println("Successfully loaded sprite sheet : " + imagePath);
+            if(Game.debug) System.out.println("Successfully loaded sprite sheet : " + imagePath);
         }
         catch (IOException e) {
             e.printStackTrace();

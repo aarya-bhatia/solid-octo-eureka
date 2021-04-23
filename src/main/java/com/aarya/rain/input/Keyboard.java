@@ -7,7 +7,9 @@ public class Keyboard implements KeyListener {
 
     public static final Keyboard INSTANCE = new Keyboard();
     private static final int NUM_KEYS = 256;
-    private static final boolean[] keys = new boolean[NUM_KEYS];
+    private final boolean[] keys = new boolean[NUM_KEYS];
+
+    private Keyboard(){}
 
     public boolean up() {
         return keys[KeyEvent.VK_UP] || keys[KeyEvent.VK_W];

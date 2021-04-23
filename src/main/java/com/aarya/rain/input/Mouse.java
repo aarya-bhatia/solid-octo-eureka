@@ -6,20 +6,21 @@ import java.awt.event.MouseMotionListener;
 
 public class Mouse implements MouseListener, MouseMotionListener {
 
+    /* singleton */
     public static final Mouse INSTANCE = new Mouse();
 
     public static final short LEFT_CLICK = 1;
     public static final short RIGHT_CLICK = 3;
 
-    private static int mouseX = -1;
-    private static int mouseY = -1;
-    private static int mouseButton = -1;
+    private int mouseX = -1;
+    private int mouseY = -1;
+    private int mouseButton = -1;
 
-    public Mouse() {}
+    private Mouse() {}
 
-    public static int getX() { return mouseX; }
-    public static int getY() { return mouseY; }
-    public static int getButton() { return mouseButton; }
+    public int getX() { return mouseX; }
+    public int getY() { return mouseY; }
+    public int getButton() { return mouseButton; }
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -45,6 +46,8 @@ public class Mouse implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseDragged(MouseEvent e) {
+        mouseX = e.getX();
+        mouseY = e.getY();
     }
 
     @Override

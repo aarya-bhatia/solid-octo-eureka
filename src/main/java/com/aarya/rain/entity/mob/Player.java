@@ -1,5 +1,6 @@
 package com.aarya.rain.entity.mob;
 
+import com.aarya.rain.Game;
 import com.aarya.rain.graphics.Renderer;
 import com.aarya.rain.graphics.Sprite;
 import com.aarya.rain.input.Keyboard;
@@ -9,11 +10,13 @@ public class Player extends Mob {
 
     private final Keyboard input;
     private short anim = 0;
+    private Game game;
 
-    public Player(int x, int y, Keyboard input) {
+    public Player(int x, int y, Keyboard input, Game game) {
         this.x = x;
         this.y = y;
         this.input = input;
+        this.game = game;
     }
 
     @Override
@@ -43,10 +46,10 @@ public class Player extends Mob {
     }
 
     private void updateShooting() {
-        if(Mouse.getButton() == Mouse.LEFT_CLICK) {
-//            double dy = Mouse.getY() - (Game.height * Game.scale) / 2;
-//            double dx = Mouse.getX() - (Game.width * Game.scale) / 2;
-//            shoot(x, y, Math.atan2(dy, dx));
+        if(Mouse.INSTANCE.getButton() == Mouse.LEFT_CLICK) {
+            double dy = Mouse.INSTANCE.getY() - game.getHeightScaled()/2;
+            double dx = Mouse.INSTANCE.getX() - game.getWidthScaled()/2;
+            shoot(x, y, Math.atan2(dy, dx));
         }
     }
 

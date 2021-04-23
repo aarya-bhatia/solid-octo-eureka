@@ -1,64 +1,45 @@
 package com.aarya.rain;
 
-import com.aarya.rain.entity.mob.Player;
-import com.aarya.rain.graphics.Window;
-import com.aarya.rain.input.Keyboard;
-import com.aarya.rain.level.Level;
-import com.aarya.rain.level.SpawnLevel;
+import com.aarya.rain.graphics.Renderer;
 
 public class Game implements Runnable {
 
-    private final int WIDTH = 300;
-    private final int HEIGHT = (WIDTH / 16 * 9);
-    private final int SCALE = 3;
-    private final String TITLE = "Rain";
-    private final double ns = (1e9) / 60.0;
-
+    private final int width = 300;
+    private final int height = (width / 16 * 9);
+    private final int scale = 3;
+    private final String title = "Rain";
+    private final double update_cap = (1.0/60.0);
+    private volatile boolean running = false;
+    private final Window window;
+    private final Renderer renderer;
+    private final AbstractGame game;
+    private Thread thread;
     public static boolean debug = false;
 
-    private volatile boolean running = false;
-    private final Player player;
-    private final Level level;
-    private final Window window;
-    private Thread thread;
-
-    public Game() {
+    public Game(AbstractGame game) {
+        this.game = game;
         window = new Window(this);
-        level = new SpawnLevel("/textures/level.png", 16, 16);
-        player = new Player(0, HEIGHT / 2, Keyboard.INSTANCE);
-        player.setLevel(level);
+        renderer = new Renderer(this, window);
     }
 
     public int getWidth() {
-        return WIDTH;
+        return width;
     }
 
     public int getHeight() {
-        return HEIGHT;
+        return height;
     }
 
     public int getWidthScaled() {
-        return WIDTH * SCALE;
+        return width * scale;
     }
 
     public int getHeightScaled() {
-        return HEIGHT * SCALE;
-    }
-
-    public Player getPlayer() {
-        return player;
+        return height * scale;
     }
 
     public String getTitle() {
-        return TITLE;
-    }
-
-    public Level getLevel() {
-        return level;
-    }
-
-    public Window getWindow() {
-        return window;
+        return title;
     }
 
     public synchronized void start() {
@@ -77,42 +58,57 @@ public class Game implements Runnable {
     }
 
     public void run() {
-        long lastTime = System.nanoTime();
-        long timer = System.currentTimeMillis();
-        double delta = 0;
+        double firstTime;
+        double lastTime = System.nanoTime()/1.0e9;
+        double passedTime;
+        double unprocessedTime = 0;
+        double frameTime = 0;
         int frames = 0;
-        int updates = 0;
+        boolean render;
 
         while (running) {
-            long now = System.nanoTime();
-            delta += (now - lastTime) / ns;
-            lastTime = now;
+            render = false;
+            firstTime = System.nanoTime()/1.0e9;
+            passedTime = firstTime-lastTime;
+            lastTime = firstTime;
 
-            while (delta >= 1) {
-                update();
-                delta--;
-                updates++;
+            unprocessedTime += passedTime;
+            frameTime += passedTime;
+
+            while (unprocessedTime >= update_cap) {
+                unprocessedTime -= update_cap;
+                render = true;
+
+                /* update game */
+
+                if(frameTime >= 1.0) {
+                    frameTime = 0;
+                    int fps = frames;
+                    frames = 0;
+                    window.getJFrame().setTitle(title + " | FPS: " + fps);
+                }
             }
 
-            window.render();
-            frames++;
+            /* render game */
+            if(render) {
+                renderer.clear();
 
-            if (System.currentTimeMillis() - timer > 1000) {
-                timer = System.currentTimeMillis();
-                window.getJFrame().setTitle(TITLE + " | FPS: " + frames + " | UPS: " + updates);
-                updates = frames = 0;
+                game.update(this, (float) (1.0/60.0));
+                game.render(this, renderer);
+
+                window.update();
+
+                frames++;
+            }
+            else {
+                try {
+                    Thread.sleep(1);
+                }
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
         stop();
     }
-
-    public void update() {
-        player.update();
-    }
-
-    public static void main(String[] args) {
-        Game game = new Game();
-        game.start();
-    }
-
 }

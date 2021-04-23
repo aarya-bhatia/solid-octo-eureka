@@ -1,7 +1,5 @@
 package com.aarya.rain.graphics;
 
-import com.aarya.rain.Game;
-
 import java.util.HashMap;
 
 public class Sprite {
@@ -16,7 +14,6 @@ public class Sprite {
     public static final HashMap<String, Sprite> SPRITES = new HashMap<>();
 
     static {
-
         SPRITES.put("void", new Sprite(0x311432));
         SPRITES.put("water", new Sprite(0x1B87E0));
 
@@ -70,12 +67,6 @@ public class Sprite {
         SPRITES.put("basic.tiles.rocks.1", new Sprite(2,7, SpriteSheet.BASIC_TILES));
         SPRITES.put("basic.tiles.shrubs.1", new Sprite(4,2, SpriteSheet.BASIC_TILES));
         SPRITES.put("basic.tiles.water", new Sprite(5,2, SpriteSheet.BASIC_TILES));
-
-        if(Game.debug) {
-            System.out.println("# sprites : " + SPRITES.size());
-            System.out.println("grass sprite size: " + SPRITES.get("grass.1").SIZE);
-        }
-
     }
 
     public Sprite(int x, int y, SpriteSheet sheet) {
@@ -101,10 +92,13 @@ public class Sprite {
     private void load() {
         for (int y = 0; y < SIZE; y++) {
             for (int x = 0; x < SIZE; x++) {
-                pixels[x + y * SIZE] = sheet.pixels[(x + this.x) +
-                        (y + this.y) * sheet.width];
+                setPixel(x, y, sheet.pixels[(x + this.x) + (y + this.y) * sheet.width]);
             }
         }
+    }
+
+    private void setPixel(int x, int y, int p) {
+        pixels[x + y * SIZE] = p;
     }
 
     public int getPixel(int x, int y) {

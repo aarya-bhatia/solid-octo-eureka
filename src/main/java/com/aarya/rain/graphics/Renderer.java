@@ -1,8 +1,8 @@
 package com.aarya.rain.graphics;
 
 import com.aarya.rain.Game;
+import com.aarya.rain.Window;
 import com.aarya.rain.level.tile.Tile;
-import com.aarya.rain.level.tile.VoidTile;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
@@ -17,7 +17,15 @@ public class Renderer {
     private int xOff = 0;
     private int yOff = 0;
 
-    private static final int hiddenColor = Tile.GRASS_1.sprite.pixels[0];
+    private static final int CLR = 0xffff00ff; /* do not render this color */
+
+    private static final int grassCol = Tile.GRASS_1.sprite.pixels[0];
+
+    public Renderer(Game game, Window window) {
+        this.width = game.getWidth();
+        this.height = game.getHeight();
+        this.pixels = ((DataBufferInt) window.getImage().getRaster().getDataBuffer()).getData();
+    }
 
     public Renderer(BufferedImage image, int w, int h) {
         this.width = w;
@@ -25,18 +33,9 @@ public class Renderer {
         this.pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
     }
 
-    public int getXOff() {
-        return xOff;
-    }
-
-    public int getYOff() {
-        return yOff;
-    }
-
     public void setXOff(int xOff) {
         this.xOff = xOff;
     }
-
     public void setYOff(int yOff) {
         this.yOff = yOff;
     }
@@ -46,7 +45,7 @@ public class Renderer {
     }
 
     private void setPixel(int x, int y, int col) {
-        if(x < 0 || x >= width || y < 0 || y >= height) {
+        if(x < 0 || x >= width || y < 0 || y >= height || col == CLR) {
             return;
         }
         this.pixels[x + y * width] = col;
@@ -64,7 +63,7 @@ public class Renderer {
                     setPixel(xAbs, yAbs, col);
                 }
                 else {
-                    setPixel(xAbs, yAbs, hiddenColor);
+                    setPixel(xAbs, yAbs, grassCol);
                 }
             }
         }
@@ -94,5 +93,13 @@ public class Renderer {
 
     private boolean valid(int x, int y) {
         return x >= -(Sprite.SIZE) && x < width && y >= 0 && y < height;
+    }
+
+    public void drawImage(GfxImage image, int offX, int offY) {
+        for(int y = 0; y < image.getH(); y++) {
+            for(int x = 0; x < image.getW(); x++) {
+                setPixel(x + offX, y + offY, image.getP(x, y));
+            }
+        }
     }
 }
