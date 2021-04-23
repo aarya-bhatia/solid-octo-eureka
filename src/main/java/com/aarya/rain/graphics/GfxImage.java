@@ -55,6 +55,10 @@ public class GfxImage {
     }
 
     public int getP(int x, int y) {
+        if(x < 0 || x >= w || y < 0 || y >= h){
+            System.out.println("pixel out of bounds!");
+            return 0;
+        }
         return p[x + y * w];
     }
 }

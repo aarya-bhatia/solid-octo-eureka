@@ -49,7 +49,19 @@ public class GameManager implements AbstractGame {
 //        g.drawString(String.format("MOUSE X:%d Y:%d Btn:%d",
 //                Mouse.getX(), Mouse.getY(), Mouse.getButton()), 50, 50);
 
-        r.drawImage(image, Mouse.INSTANCE.getX() - image.getW(), Mouse.INSTANCE.getY() - image.getH());
+//        r.drawRect(Mouse.INSTANCE.getX(), Mouse.INSTANCE.getY(), 16, 16, -1);
+
+        r.drawImage(image, Mouse.INSTANCE.getX(), Mouse.INSTANCE.getY());
+
+        if(Mouse.INSTANCE.getButton() == Mouse.RIGHT_CLICK || Mouse.INSTANCE.getButton() == Mouse.LEFT_CLICK) {
+            System.out.printf("Mouse x: %d, Mouse y: %d \n", Mouse.INSTANCE.getX(), Mouse.INSTANCE.getY());
+        }
+        if(Keyboard.INSTANCE.down()) {
+            System.out.println("Key pressed: down");
+        }
+        if(Keyboard.INSTANCE.up()) {
+            System.out.println("Key pressed: up");
+        }
     }
 
     public static void main(String[] args) {

@@ -96,9 +96,37 @@ public class Renderer {
     }
 
     public void drawImage(GfxImage image, int offX, int offY) {
-        for(int y = 0; y < image.getH(); y++) {
-            for(int x = 0; x < image.getW(); x++) {
+
+        int nx = 0, ny = 0, nw = image.getW(), nh = image.getH();
+
+        if(nw + offX > width) {
+            nw = width - offX;
+            System.out.printf("new width: %d\n",nw);
+        }
+
+        if(nh + offY > height) {
+            nh = height - offY;
+            System.out.printf("new height: %d \n",nh);
+        }
+
+//        for(int y = ny; y < nh; y++) {
+//            for(int x = nx; x < nw; x++) {
+//                setPixel(x + offX, y + offY, image.getP(x, y));
+//            }
+//        }
+
+        for(int y = 0; y < Math.min(height, image.getH() + offY); y++) {
+            for(int x = 0; x < Math.min(width, image.getW() + offX); x++) {
                 setPixel(x + offX, y + offY, image.getP(x, y));
+            }
+        }
+
+    }
+
+    public void drawRect(int offX, int offY, int w, int h, int col) {
+        for(int y = offY; y < Math.min(height, offY + h); y++) {
+            for(int x = offX; x < Math.min(width, offX + w); x++) {
+                setPixel(x, y, col);
             }
         }
     }

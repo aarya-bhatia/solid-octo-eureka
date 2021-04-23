@@ -6,7 +6,7 @@ public class Game implements Runnable {
 
     private final int width = 300;
     private final int height = (width / 16 * 9);
-    private final int scale = 3;
+    public static final int scale = 3;
     private final String title = "Rain";
     private final double update_cap = (1.0/60.0);
     private volatile boolean running = false;

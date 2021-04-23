@@ -1,5 +1,7 @@
 package com.aarya.rain.input;
 
+import com.aarya.rain.Game;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -46,13 +48,13 @@ public class Mouse implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        mouseX = e.getX();
-        mouseY = e.getY();
+        mouseX = e.getX()/Game.scale;
+        mouseY = e.getY()/Game.scale;
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        mouseX = e.getX();
-        mouseY = e.getY();
+        mouseX = e.getX()/Game.scale;
+        mouseY = e.getY()/Game.scale;
     }
 }
