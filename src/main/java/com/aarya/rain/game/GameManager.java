@@ -2,31 +2,43 @@ package com.aarya.rain.game;
 
 import com.aarya.rain.AbstractGame;
 import com.aarya.rain.Game;
-import com.aarya.rain.entity.mob.Player;
-import com.aarya.rain.graphics.GfxImage;
+import com.aarya.rain.graphics.GfxTile;
 import com.aarya.rain.graphics.Renderer;
 import com.aarya.rain.input.Keyboard;
 import com.aarya.rain.input.Mouse;
-import com.aarya.rain.level.Level;
 
 public class GameManager implements AbstractGame {
 
-    private Player player;
-    private Level level;
+//    private Player player;
+//    private Level level;
 
-    private GfxImage image;
+    float tmp = 0.0f;
+    float speed = 10.0f;
+    boolean play = true;
+    float click = 0;
+
+    private GfxTile image;
 
     public GameManager() {
 //        level = new SpawnLevel("/textures/level.png", 16, 16);
 //        player = new Player(0, HEIGHT / 2, Keyboard.INSTANCE, this);
 //        player.setLevel(level);
-        image = new GfxImage("/textures/test-image-1.png");
+        image = new GfxTile("/textures/animation.png", 16, 16);
     }
 
     @Override
     public void update(Game game, float dt) {
 //        player.update();
 //        level.update();
+
+        if(click > 0) click--;
+
+        if(Mouse.INSTANCE.getButton() == Mouse.RIGHT_CLICK && click == 0) {
+            play = !play;
+            click = Mouse.CLICK_RATE;
+        }
+
+        if(play) tmp = (tmp + dt * speed) % 2;
     }
 
     @Override
@@ -49,10 +61,14 @@ public class GameManager implements AbstractGame {
 //        g.drawString(String.format("MOUSE X:%d Y:%d Btn:%d",
 //                Mouse.getX(), Mouse.getY(), Mouse.getButton()), 50, 50);
 
-//        r.drawRect(Mouse.INSTANCE.getX(), Mouse.INSTANCE.getY(), 16, 16, -1);
+        r.drawImageTile(image,
+                Mouse.INSTANCE.getX() - image.getTileW()/2,
+                Mouse.INSTANCE.getY() - image.getTileH()/2,
+                (int)tmp,
+                1 - (int)tmp);
+    }
 
-        r.drawImage(image, Mouse.INSTANCE.getX(), Mouse.INSTANCE.getY());
-
+    private static void testInput() {
         if(Mouse.INSTANCE.getButton() == Mouse.RIGHT_CLICK || Mouse.INSTANCE.getButton() == Mouse.LEFT_CLICK) {
             System.out.printf("Mouse x: %d, Mouse y: %d \n", Mouse.INSTANCE.getX(), Mouse.INSTANCE.getY());
         }

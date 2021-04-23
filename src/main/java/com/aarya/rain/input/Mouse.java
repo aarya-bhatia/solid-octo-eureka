@@ -13,6 +13,7 @@ public class Mouse implements MouseListener, MouseMotionListener {
 
     public static final short LEFT_CLICK = 1;
     public static final short RIGHT_CLICK = 3;
+    public static final int CLICK_RATE = 20;
 
     private int mouseX = -1;
     private int mouseY = -1;

@@ -95,38 +95,56 @@ public class Renderer {
         return x >= -(Sprite.SIZE) && x < width && y >= 0 && y < height;
     }
 
+    /**
+     * This method renders a simple image to the screen.
+     * @param image the image object to render
+     * @param offX the x position on screen
+     * @param offY the y position on screen
+     */
     public void drawImage(GfxImage image, int offX, int offY) {
+        /* off screen */
+        if(offX < -image.getW() || offY < -image.getH() || offX >= width || offY >= height) { return; }
 
         int nx = 0, ny = 0, nw = image.getW(), nh = image.getH();
 
-        if(nw + offX > width) {
-            nw = width - offX;
-            System.out.printf("new width: %d\n",nw);
-        }
+        /* clipping code */
+        if(offX < 0) { nx -= offX; }
+        if(offY < 0) { ny -= offY; }
+        if(nw + offX > width) { nw = width - offX; }
+        if(nh + offY > height) { nh = height - offY; }
 
-        if(nh + offY > height) {
-            nh = height - offY;
-            System.out.printf("new height: %d \n",nh);
-        }
-
-//        for(int y = ny; y < nh; y++) {
-//            for(int x = nx; x < nw; x++) {
-//                setPixel(x + offX, y + offY, image.getP(x, y));
-//            }
-//        }
-
-        for(int y = 0; y < Math.min(height, image.getH() + offY); y++) {
-            for(int x = 0; x < Math.min(width, image.getW() + offX); x++) {
+        for(int y = ny; y < nh; y++) {
+            for(int x = nx; x < nw; x++) {
                 setPixel(x + offX, y + offY, image.getP(x, y));
             }
         }
-
     }
 
-    public void drawRect(int offX, int offY, int w, int h, int col) {
-        for(int y = offY; y < Math.min(height, offY + h); y++) {
-            for(int x = offX; x < Math.min(width, offX + w); x++) {
-                setPixel(x, y, col);
+    /**
+     * this method renders a tile to the screen
+     * @param image the sprite sheet containing the tiles
+     * @param offX the x position on the screen
+     * @param offY the y position on the screen
+     * @param tileX the x position of tile in the image
+     * @param tileY the y position of tile in the image
+     */
+    public void drawImageTile(GfxTile image, int offX, int offY, int tileX, int tileY) {
+        /* off screen */
+        if(offX < -image.getTileW() || offY < -image.getTileH() || offX >= width || offY >= height) { return; }
+
+        int nx = 0, ny = 0, nw = image.getTileW(), nh = image.getTileH();
+
+        /* clipping code */
+        if(offX < 0) { nx -= offX; }
+        if(offY < 0) { ny -= offY; }
+        if(nw + offX > width) { nw = width - offX; }
+        if(nh + offY > height) { nh = height - offY; }
+
+        for(int y = ny; y < nh; y++) {
+            for(int x = nx; x < nw; x++) {
+                setPixel(x + offX, y + offY,
+                        image.getP(x + tileX * image.getTileW(),
+                                y + tileY * image.getTileH()));
             }
         }
     }
