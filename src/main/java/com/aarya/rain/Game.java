@@ -2,6 +2,8 @@ package com.aarya.rain;
 
 import com.aarya.rain.graphics.Renderer;
 
+import java.awt.*;
+
 public class Game implements Runnable {
 
     private final int width = 300;
@@ -65,6 +67,7 @@ public class Game implements Runnable {
         double frameTime = 0;
         int frames = 0;
         boolean render;
+        int fps = 0;
 
         while (running) {
             render = false;
@@ -83,7 +86,7 @@ public class Game implements Runnable {
 
                 if(frameTime >= 1.0) {
                     frameTime = 0;
-                    int fps = frames;
+                    fps = frames;
                     frames = 0;
                     window.getJFrame().setTitle(title + " | FPS: " + fps);
                 }
@@ -92,12 +95,10 @@ public class Game implements Runnable {
             /* render game */
             if(render) {
                 renderer.clear();
-
                 game.update(this, (float) (1.0/60.0));
                 game.render(this, renderer);
-
+                renderer.drawText("FPS: " + fps, 0, 0, 0xff00ffff);
                 window.update();
-
                 frames++;
             }
             else {

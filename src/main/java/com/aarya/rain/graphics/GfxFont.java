@@ -1,6 +1,10 @@
 package com.aarya.rain.graphics;
 
+import java.util.Arrays;
+
 public class GfxFont {
+
+    public static final GfxFont standard = new GfxFont("/fonts/standard.png");
 
     /**
      * the top row of pixels contains the markers.
@@ -12,11 +16,11 @@ public class GfxFont {
     private GfxImage fontImage;
     private int[] offsets;
     private int[] fw; /* letter widths */
-    private final int n = 58; /* number of letters */
+    private final int n = 60; /* number of letters */
 
-    private final int col_blue = 0x0000ff;
-    private final int col_yellow = 0xffff00;
-    private final int alpha_mask = -1;
+    public static final int col_blue = 0xff0000ff; // 0xFF1D00FF;
+    public static final int col_yellow = 0xffffff00; // 0xFFFEFF00;
+    public static final int col_white = 0xffffffff; // 0xFFFFFFFF;
 
     public GfxImage getFontImage() {
         return fontImage;
@@ -48,17 +52,27 @@ public class GfxFont {
         fw = new int[n];
 
         int idx = 0;
-        int off = 0;
+        printColArray(fontImage.getP());
 
         for(int i = 0; i < fontImage.getW(); i++){
-            if((fontImage.getP()[i] & alpha_mask) == col_blue) {
-//                offsets[u] = i;
-                off = i;
+            if(fontImage.getP()[i] == col_blue) {
+                offsets[idx] = i;
             }
-            if((fontImage.getP()[i] & alpha_mask) == col_yellow) {
-//                fw[u] = i - offsets[u];
-                fw[idx++] = i - off;
+            if(fontImage.getP()[i] == col_yellow) {
+                fw[idx] = i - offsets[idx];
+                idx++;
             }
         }
+
+        printColArray(offsets);
+        printColArray(fw);
+    }
+
+    private void printColArray(int[] p) {
+        System.out.println("START");
+        for(int c: p) {
+            System.out.print(Integer.toHexString(c) + " ");
+        }
+        System.out.println("\nEND");
     }
 }

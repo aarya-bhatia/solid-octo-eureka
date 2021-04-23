@@ -7,12 +7,15 @@ import com.aarya.rain.level.tile.Tile;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.util.Arrays;
+import java.util.Locale;
 
 public class Renderer {
 
     private final int width;
     private final int height;
     private final int[] pixels;
+
+    private GfxFont font = GfxFont.standard;
 
     private int xOff = 0;
     private int yOff = 0;
@@ -146,6 +149,26 @@ public class Renderer {
                         image.getP(x + tileX * image.getTileW(),
                                 y + tileY * image.getTileH()));
             }
+        }
+    }
+
+    public void drawText(String text, int offX, int offY, int col) {
+//        text = text.toUpperCase();
+        int offset = 0;
+
+        for(int i = 0; i < text.length(); i++) {
+            int unicode = (int)(Character.toUpperCase(text.charAt(i))) - 32; //(int)' ';
+
+            for(int y = 0; y < font.getFontImage().getH(); y++) {
+                for(int x = 0; x < font.getFw()[unicode]; x++) {
+                    /* letters are white in image */
+                    if(font.getFontImage().getP(x + font.getOffsets()[unicode], y) == GfxFont.col_white) {
+                        setPixel(x + offset + offX, y + offY, col);
+                    }
+                }
+            }
+
+            offset += font.getFw()[unicode];
         }
     }
 }
