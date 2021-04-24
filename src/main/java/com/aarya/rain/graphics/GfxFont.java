@@ -52,7 +52,7 @@ public class GfxFont {
         fw = new int[n];
 
         int idx = 0;
-        printColArray(fontImage.getP());
+//        printColArray(fontImage.getP());
 
         for(int i = 0; i < fontImage.getW(); i++){
             if(fontImage.getP()[i] == col_blue) {
@@ -64,8 +64,8 @@ public class GfxFont {
             }
         }
 
-        printColArray(offsets);
-        printColArray(fw);
+//        printColArray(offsets);
+//        printColArray(fw);
     }
 
     private void printColArray(int[] p) {
