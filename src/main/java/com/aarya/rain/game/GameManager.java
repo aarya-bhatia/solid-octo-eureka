@@ -2,10 +2,13 @@ package com.aarya.rain.game;
 
 import com.aarya.rain.AbstractGame;
 import com.aarya.rain.Game;
+import com.aarya.rain.audio.SoundClip;
 import com.aarya.rain.graphics.GfxTile;
 import com.aarya.rain.graphics.Renderer;
 import com.aarya.rain.input.Keyboard;
 import com.aarya.rain.input.Mouse;
+
+import java.awt.event.KeyEvent;
 
 public class GameManager implements AbstractGame {
 
@@ -15,15 +18,22 @@ public class GameManager implements AbstractGame {
     float tmp = 0.0f;
     float speed = 10.0f;
     boolean play = true;
-    float click = 0;
+    int click = 0;
+    int keyClick = 0;
+    int songClick = 0;
 
     private GfxTile image;
+
+    private SoundClip clip = SoundClip.sound;
+    private SoundClip song = new SoundClip("/audio/Ice.wav");
 
     public GameManager() {
 //        level = new SpawnLevel("/textures/level.png", 16, 16);
 //        player = new Player(0, HEIGHT / 2, Keyboard.INSTANCE, this);
 //        player.setLevel(level);
         image = new GfxTile("/textures/animation.png", 16, 16);
+
+        song.setVolume(-0.4f);
     }
 
     @Override
@@ -32,10 +42,33 @@ public class GameManager implements AbstractGame {
 //        level.update();
 
         if(click > 0) click--;
+        if(keyClick > 0) keyClick--;
+        if(songClick > 0) songClick--;
 
         if(Mouse.INSTANCE.getButton() == Mouse.RIGHT_CLICK && click == 0) {
             play = !play;
             click = Mouse.CLICK_RATE;
+        }
+
+        if(Keyboard.INSTANCE.isKey(KeyEvent.VK_K) && keyClick == 0) {
+            if(clip.isRunning()) {
+                clip.stop();
+            }
+            else {
+                clip.play();
+            }
+             keyClick = 20;
+        }
+
+        if(Keyboard.INSTANCE.isKey(KeyEvent.VK_J) && songClick == 0) {
+            if(song.isRunning()) {
+                song.stop();
+            }
+            else {
+                song.play();
+            }
+
+            songClick=30;
         }
 
         if(play) tmp = (tmp + dt * speed) % 2;
@@ -66,6 +99,13 @@ public class GameManager implements AbstractGame {
                 Mouse.INSTANCE.getY() - image.getTileH()/2,
                 (int)tmp,
                 1 - (int)tmp);
+
+        if(song.isRunning()) {
+            r.drawText("AUDIO ON", game.getWidth()/2, game.getHeight()/2, -1);
+        }
+        else {
+            r.drawText("AUDIO OFF", game.getWidth()/2, game.getHeight()/2, -1);
+        }
     }
 
     private static void testInput() {
@@ -83,5 +123,9 @@ public class GameManager implements AbstractGame {
     public static void main(String[] args) {
         Game game = new Game(new GameManager());
         game.start();
+    }
+
+    public void dispose() {
+        clip.close();
     }
 }

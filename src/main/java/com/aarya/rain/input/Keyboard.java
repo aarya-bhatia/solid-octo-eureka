@@ -41,4 +41,9 @@ public class Keyboard implements KeyListener {
         if(e.getKeyCode() < keys.length)
             keys[e.getKeyCode()] = false;
     }
+
+    public boolean isKey(int k) {
+        if(k < 0 || k >= keys.length) { return false; }
+        return keys[k];
+    }
 }

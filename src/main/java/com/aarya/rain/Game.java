@@ -57,6 +57,7 @@ public class Game implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        game.dispose();
     }
 
     public void run() {

@@ -7,6 +7,8 @@ import java.io.InputStream;
 
 public class SoundClip {
 
+    public static final SoundClip sound = new SoundClip("/audio/sound.wav");
+
     private Clip clip;
     private FloatControl gainControl;
 
@@ -36,32 +38,37 @@ public class SoundClip {
         }
     }
 
-    public synchronized void play() {
-        if(clip == null) { return; }
-        stop();
-        clip.setFramePosition(0);
-        while(!clip.isRunning()) {
-            clip.start();
+    public void play() {
+        if(clip == null || isRunning()) {
+            return;
+        }
+        else {
+            clip.setFramePosition(0);
+            while(!clip.isRunning()) {
+                clip.start();
+            }
         }
     }
 
-    public synchronized void stop() {
+    public void stop() {
         if(clip == null) { return; }
-        if(clip.isRunning()) { clip.stop(); }
+        if(clip.isRunning()) {
+            clip.stop();
+        }
     }
 
-    public synchronized void close() {
+    public void close() {
         stop();
         clip.drain();
         clip.close();
     }
 
-    public synchronized void loop() {
+    public void loop() {
         clip.loop(Clip.LOOP_CONTINUOUSLY);
         play();
     }
 
-    public synchronized void setVolume(float value) {
+    public void setVolume(float value) {
         gainControl.setValue(value);
     }
 
